@@ -61,16 +61,13 @@
     <h1>最初の部屋</h1>
     <div class="subtitle">――どこへ進みますか？――</div>
 
-    <!-- 🗺️ マップ通りの分岐ボタン -->
+    <!-- 🗺️ あなたのGitHubのファイル名（left-room.html、right-room.html）と完全に一致させました！ -->
     <div class="choice-container">
-        <!-- クリックすると「右の部屋（right-room.html）」へ -->
-        <a href="right-room.html" class="choice-btn">右の部屋</a>
-        
-        <!-- クリックすると「左の部屋（left-room.html）」へ -->
         <a href="left-room.html" class="choice-btn">左の扉</a>
+        <a href="right-room.html" class="choice-btn">右の部屋</a>
     </div>
 
-    <!-- デベロッパーツール対策 -->
+    <!-- デベロッパーツール対策（右クリック・F12禁止） -->
     <script>
         window.addEventListener('keydown', function (e) {
             if (e.key === 'F12') { e.preventDefault(); return false; }
