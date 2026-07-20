@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>警告</title>
+    <style>
+        /* 💡 画面を真っ白、文字を真っ黒にして「システムの強制バグ」っぽさを演出 */
+        html, body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'MS Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 36px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .alert-text {
+            font-size: 16px;
+            color: #666666;
+            margin-bottom: 50px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* 最初に戻るためのボタン */
+        .return-btn {
+            color: #000000;
+            text-decoration: none;
+            font-size: 16px;
+            border: 1px solid #000000;
+            padding: 10px 30px;
+            transition: 0.2s;
+        }
+
+        .return-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>ERROR: 404 NOT FOUND</h1>
+    
+    <div class="alert-text">
+        ――だまされたね。<br>
+        ここには最初から、安全な道なんて存在しない。
+    </div>
+
+    <!-- 💡 クリックすると一番最初のトップページ（index.html）に戻ります -->
+    <a href="index.html" class="return-btn">タイトルに戻る</a>
+
+    <!-- デベロッパーツール対策 -->
+    <script {nonce}>
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
