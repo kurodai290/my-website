@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>暗い通路</title>
+    <style>
+        /* 👁️ 完全な静寂と闇を表現する黒背景 */
+        html, body {
+            background-color: #000000;
+            color: #ff0000; /* 血のような赤文字 */
+            font-family: 'MS Mincho', 'serif';
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 40px;
+            letter-spacing: 15px;
+            text-shadow: 0 0 10px #ff0000;
+            margin-bottom: 30px;
+        }
+
+        .alert-text {
+            font-size: 16px;
+            color: #555555;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        /* 💡 5秒後に自動で出現する「最初に戻る」隠しリンク */
+        .escape-btn {
+            display: none; /* 最初は隠しておく */
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            border: 1px solid #ffffff;
+            padding: 10px 30px;
+            transition: 0.3s;
+        }
+        .escape-btn:hover { background-color: #ffffff; color: #000000; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>引き返せ</h1>
+    <div class="alert-text">暗闇があなたを包み込んでいる……。</div>
+
+    <!-- 5秒後に自動で浮かび上がってくる脱出ボタン -->
+    <a href="index.html" id="backBtn" class="escape-btn">引き返す</a>
+
+    <script {nonce}>
+        // 5秒（5000ミリ秒）経ったら、静かに戻るボタンを出現させる魔法
+        setTimeout(function() {
+            document.getElementById("backBtn").style.display = "inline-block";
+        }, 5000);
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
