@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ようこそ...</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* 一番右上の隠しテキストボックス */
+        .hidden-box {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .hidden-box input {
+            background-color: #000000;
+            border: 1px solid #000000;
+            color: #ffffff;
+            padding: 5px;
+            font-size: 14px;
+            width: 120px;
+            outline: none;
+            text-align: center;
+            cursor: default;
+        }
+
+        .hidden-box input:focus {
+            border: 1px solid #ff0000;
+            cursor: text;
+        }
+
+        /* メイン画面の見た目 */
+        .title {
+            color: #d60000;
+            font-size: 32px;
+            letter-spacing: 10px;
+            margin-top: 15vh;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(214, 0, 0, 0.7);
+            animation: flicker 3s infinite;
+        }
+
+        .warning {
+            color: #888888;
+            font-size: 14px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .enter-link {
+            display: block;
+            width: 100px;
+            margin: 80px auto 0 auto;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 20px;
+            border: 1px solid #333333;
+            padding: 15px 40px;
+            transition: 0.5s;
+            text-align: center;
+        }
+
+        .enter-link:hover {
+            color: #ff0000;
+            border-color: #ff0000;
+            background-color: #1a0000;
+            box-shadow: 0 0 15px #ff0000;
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<!-- 💡 bodyの右クリック禁止を、プログラムでON/OFFできるようにIDをつけました -->
+<body id="mainBody" oncontextmenu="return isLocked;">
+
+    <!-- 右上の隠しテキストボックス -->
+    <div class="hidden-box">
+        <input type="text" id="secretInput" placeholder="" onkeydown="checkSecret(event)">
+    </div>
+
+    <!-- メイン画面 -->
+    <div>
+        <div class="title">ふぁんしーなしま</div>
+        <p class="warning">※心臓の弱い方はご注意ください</p>
+        <a href="room1.html" class="enter-link">はいる</a>
+    </div>
+
+    <script>
+        // 🔒 初期状態はロックON（true）
+        var isLocked = true;
+
+        // 右上の隠しテキストボックスの判定
+        function checkSecret(event) {
+            if (event.key === 'Enter') {
+                var value = document.getElementById("secretInput").value;
+                
+                // 💡 解除コード「unlockf12」が入力された場合
+                if (value === "unlockf12") {
+                    isLocked = false; // ロックを解除する
+                    alert("デベロッパーツールの制限を解除しました。");
+                    document.getElementById("secretInput").value = ""; 
+                } 
+                // 前回の「おばけ」ルートも残してあります
+                else if (value === "おばけ") {
+                    alert("秘密の裏口を見つけたね...");
+                    window.location.href = "secret-room.html";
+                } else {
+                    alert("ちがう。");
+                    document.getElementById("secretInput").value = "";
+                }
+            }
+        }
+
+        // デベロッパーツール対策のキーボード監視
+        window.addEventListener('keydown', function (e) {
+            // 🔒 ロックがON（true）の時だけ、F12やショートカットを禁止する
+            if (isLocked) {
+                if (e.key === 'F12') { e.preventDefault(); return false; }
+                if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+                if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+            }
+        });
+    </script>
+
+</body>
+</html>
