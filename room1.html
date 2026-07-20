@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>最初の部屋</title>
     <style>
+        /* 画面を真っ黒にしてホラー感を継続 */
         html, body {
             background-color: #000000;
             color: #ffffff;
@@ -17,37 +18,51 @@
             align-items: center;
             user-select: none;
         }
-        h1 { color: #ffffff; font-size: 28px; margin-bottom: 20px; letter-spacing: 5px; }
-        .subtitle { color: #888888; font-size: 16px; margin-bottom: 60px; }
-        .choice-container { display: flex; gap: 40px; }
-        .choice-btn {
+
+        h1 {
             color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+
+        /* 部屋の中に配置する怪しいメッセージやオブジェクト */
+        .message-box {
+            font-size: 18px;
+            color: #888888;
+            margin-bottom: 40px;
+        }
+
+        /* 次への手がかりとなるボタンやリンク */
+        .choice-btn {
+            color: #ff0000;
             text-decoration: none;
             font-size: 20px;
-            border: 1px solid #444444;
-            padding: 20px 50px;
-            transition: 0.4s;
-            background-color: #050505;
+            border: 1px solid #ff0000;
+            padding: 10px 30px;
+            margin: 10px;
+            transition: 0.3s;
         }
         .choice-btn:hover {
-            color: #ff0000;
-            border-color: #ff0000;
-            background-color: #1a0000;
-            box-shadow: 0 0 15px #ff0000;
+            background-color: #330000;
+            box-shadow: 0 0 10px #ff0000;
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
-    <h1>最初の部屋</h1>
-    <div class="subtitle">――どこへ進みますか？――</div>
-
-    <!-- 💡 画像のアドバイス通り、実際に存在するファイル名に変更しました！ -->
-    <div class="choice-container">
-        <a href="left-room.html" class="choice-btn">左の扉</a>
-        <a href="right-room.html" class="choice-btn">右の部屋</a>
+    <h1>第一の部屋：分かれ道</h1>
+    
+    <div class="message-box">
+        「正しい道を選ばなければ、二度と戻れない」
     </div>
 
+    <!-- 🗺️ リンク先を GitHub にある実際のファイル名に完全に修正しました！ -->
+    <div>
+        <a href="left-room.html" class="choice-btn">左の扉へ</a>
+        <a href="right-room.html" class="choice-btn">右の部屋へ</a>
+    </div>
+
+    <!-- デベロッパーツール対策のJavaScript -->
     <script>
         window.addEventListener('keydown', function (e) {
             if (e.key === 'F12') { e.preventDefault(); return false; }
