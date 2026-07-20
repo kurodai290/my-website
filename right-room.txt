@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>右の部屋</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 28px;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+
+        .subtitle {
+            color: #d60000; /* 怪しい赤文字 */
+            font-size: 16px;
+            margin-bottom: 60px;
+        }
+
+        /* マップ通りの分岐ボタン */
+        .choice-container {
+            display: flex;
+            flex-direction: column; /* ボタンを縦に並べる */
+            gap: 25px;
+            align-items: center;
+        }
+
+        .choice-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            border: 1px solid #444444;
+            padding: 15px 60px;
+            width: 200px;
+            text-align: center;
+            transition: 0.4s;
+            background-color: #050505;
+        }
+
+        /* 💡 設計図の「当たり感」を出す特別なボタンのデザイン */
+        .lucky-btn {
+            border-color: #00ff00; /* 緑色にして安全そうに見せるフェイント */
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .choice-btn:hover {
+            color: #ff0000;
+            border-color: #ff0000;
+            background-color: #1a0000;
+            box-shadow: 0 0 15px #ff0000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>右の部屋</h1>
+    <div class="subtitle">――奥から神聖な光が漏れ出している。――</div>
+
+    <!-- 🗺️ 設計図通りの分岐（どちらを選んでも「right-hazure.html」へ行く罠） -->
+    <div class="choice-container">
+        <!-- 「当たり感」を出した緑の怪しいボタン -->
+        <a href="right-hazure.html" class="choice-btn lucky-btn">✨ 安全そうな扉（推奨）</a>
+        
+        <!-- 普通のボタン -->
+        <a href="right-hazure.html" class="choice-btn">暗い通路へ進む</a>
+    </div>
+
+    <!-- デベロッパーツール対策 -->
+    <script>
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
