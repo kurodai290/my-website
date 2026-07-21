@@ -17,6 +17,21 @@
             align-items: center;
             user-select: none;
             overflow: hidden;
+            position: relative; /* 🗺️ 左上にボタンを固定するために必要 */
+        }
+
+        /* 👁️ 左上に配置する完全隠しボタンの設定 */
+        .hidden-warp-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 60px;
+            height: 60px;
+            border: none;
+            outline: none;
+            /* 💡 重要：背景と同調して点滅させ、枠線も消すことで完全にステルス化します */
+            animation: redAlert 0.5s infinite alternate; 
+            cursor: default; /* マウスを乗せても指のマークに変わらず、矢印のままでバレません */
         }
 
         /* 画面全体が赤く点滅する不気味な演出 */
@@ -62,6 +77,9 @@
 </head>
 <body oncontextmenu="return false;">
 
+    <!-- 👁️ 左上の完全隠しボタン（大きさは 60px × 60px の正方形です） -->
+    <button class="hidden-warp-btn" onclick="secretWarp()"></button>
+
     <h1>は ず れ</h1>
     
     <div class="message">
@@ -72,7 +90,15 @@
     <a href="index.html" class="retry-btn">最初からやり直す</a>
 
     <!-- デベロッパーツール対策 -->
-    <script>
+    <script {nonce}>
+        // 💡 左上の隠しボタンを押したときに発動するワープ魔法
+        function secretWarp() {
+            alert("見つかっちゃった...");
+            // 🗺️ ここに進ませたい次の部屋のファイル名を入力してください。
+            // 今回は例として、新ルートの「color-room.html」へワープするようにしてあります！
+            window.location.href = "color-room.html"; 
+        }
+
         window.addEventListener('keydown', function (e) {
             if (e.key === 'F12') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
