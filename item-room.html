@@ -23,12 +23,14 @@
             padding-top: 30px;
         }
 
+        /* 📦 散乱している物のテキスト */
         .scat-item {
             position: absolute;
             color: #333333;
             font-size: 14px;
         }
 
+        /* 🧸 部屋の真ん中にある不気味な人形 */
         .doll {
             position: absolute;
             top: 50%;
@@ -41,70 +43,28 @@
         .doll:hover {
             text-shadow: 0 0 10px #ff0000;
         }
-
-        #scare-screen {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #000000;
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .scare-text {
-            color: #ff0000;
-            font-size: 80px;
-            font-weight: bold;
-            letter-spacing: 20px;
-            animation: shake 0.1s infinite;
-        }
-
-        @keyframes shake {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            20% { transform: translate(-10px, 10px) rotate(-1deg); }
-            40% { transform: translate(-10px, -10px) rotate(1deg); }
-            60% { transform: translate(10px, 10px) rotate(0deg); }
-            80% { transform: translate(10px, -10px) rotate(-1deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
-
-        .death-link {
-            margin-top: 50px;
-            color: #ffffff;
-            text-decoration: none;
-            border: 1px solid #ffffff;
-            padding: 10px 30px;
-            font-size: 18px;
-        }
-        .death-link:hover {
-            background-color: #ffffff;
-            color: #000000;
-        }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
     <h1>なんかいろいろおいてある部屋</h1>
 
+    <!-- 散乱している物 -->
     <div class="scat-item" style="top: 20%; left: 15%;">壊れた椅子</div>
     <div class="scat-item" style="top: 25%; left: 70%;">破かれた日記</div>
     <div class="scat-item" style="top: 75%; left: 30%;">古い空き箱</div>
     <div class="scat-item" style="top: 60%; left: 80%;">ガラスの破片</div>
 
-    <div class="doll" onclick="startScare()">🧸</div>
-
-    <div id="scare-screen">
-        <div class="scare-text">ミツケタ</div>
-        <a href="index.html" class="death-link">最初からやり直す</a>
-    </div>
+    <!-- 🧸 人形を触ると、設計図通り「コード入力部屋」へ進みます -->
+    <div class="doll" onclick="goToCodeRoom()">🧸</div>
 
     <script {nonce}>
-        function startScare() {
-            document.getElementById("scare-screen").style.display = "flex";
+        function goToCodeRoom() {
+            // 💡 触るとあなたのファイル「code-room.html」へワープします！
+            window.location.href = "code-room.html";
         }
 
+        // デベロッパーツール対策
         window.addEventListener('keydown', function (e) {
             if (e.key === 'F12') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
