@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>クマの人形部屋</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .hint-text {
+            font-size: 14px;
+            color: #555555;
+            margin-bottom: 50px;
+        }
+
+        /* 🧸 4色のクマを並べるエリア */
+        .doll-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .doll-btn {
+            font-size: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: none;
+            border: none;
+            outline: none;
+        }
+        .doll-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* ❌ 設計図通りの「一発ゲームオーバー画面」（最初は隠しておく） */
+        #fail-screen {
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #ffffff; /* 白画面バグ風 */
+            color: #000000; 
+            z-index: 9999; 
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column;
+            font-family: 'MS Gothic', sans-serif;
+        }
+
+        .return-btn {
+            color: #000000;
+            text-decoration: none;
+            font-size: 16px;
+            border: 1px solid #000000;
+            padding: 10px 30px;
+            margin-top: 40px;
+        }
+        .return-btn:hover { background-color: #000000; color: #ffffff; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>クマの人形部屋</h1>
+    <div class="hint-text">――正解のクマを選べば、道は開かれる。――</div>
+
+    <!-- 🧸 設計図通りの4色のクマたち -->
+    <div class="doll-container">
+        <!-- 赤：正解！次の部屋（video-room.html）へ進む -->
+        <button class="doll-btn" onclick="goToNext()">🔴</button>
+        
+        <!-- 青：罠！ゲームオーバー -->
+        <button class="doll-btn" onclick="triggerGameOver()">🔵</button>
+        
+        <!-- 緑：正解！次の部屋（video-room.html）へ進む -->
+        <button class="doll-btn" onclick="goToNext()">🟢</button>
+        
+        <!-- 黄色：罠！ゲームオーバー -->
+        <button class="doll-btn" onclick="triggerGameOver()">🟡</button>
+    </div>
+
+    <!-- ❌ 【ゲームオーバー画面】青か黄色を押すと出現 -->
+    <div id="fail-screen">
+        <h2 style="font-size: 36px;">ERROR</h2>
+        <p style="color: #666666;">呪いが発動した。これ以上は進めない。</p>
+        <a href="index.html" class="return-btn">最初からやり直す</a>
+    </div>
+
+    <script {nonce}>
+        // 🔵か🟡の罠人形を押したときの処理
+        function triggerGameOver() {
+            document.getElementById("fail-screen").style.display = "flex";
+        }
+
+        // 🔴か🟢の正解人形を押したときの処理
+        function goToNext() {
+            // 💡 次に進む「video-room.html（動画の間）」へジャンプします！
+            window.location.href = "video-room.html";
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
