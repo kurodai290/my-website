@@ -88,8 +88,9 @@
             } 
             else if (step === 3 && direction === 'up') {
                 document.getElementById("mazeStatus").innerText = "迷路を抜けた！";
-                // 💡 ゴール！設計図にある「最初の部屋の謎公開（secret-room.html）」へ飛びます
-                window.location.href = "secret-room.html";
+                
+                // 💡 修正箇所：ゴールした瞬間、実在するファイル「item-room.html」へ直接ジャンプさせます！
+                window.location.href = "item-room.html";
             } 
             else {
                 // 間違った方向を押すと壁に激突してゲームオーバー
