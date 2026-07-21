@@ -2,69 +2,97 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>なんかいろいろおいてある部屋</title>
+    <title>暗黒の迷宮</title>
     <style>
         html, body {
             background-color: #000000;
             color: #ffffff;
             font-family: 'MS Mincho', 'serif';
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            user-select: none;
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
         }
 
-        h1 {
-            text-align: center;
-            font-size: 20px;
-            color: #555555;
-            padding-top: 30px;
+        h1 { font-size: 24px; letter-spacing: 5px; margin-bottom: 10px; }
+        .status { color: #888888; font-size: 16px; margin-bottom: 40px; height: 20px; }
+
+        /* 🎮 十字キーのボタンエリア */
+        .maze-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            grid-template-rows: repeat(2, 80px);
+            gap: 15px;
+            justify-content: center;
         }
 
-        /* 📦 散乱している物のテキスト */
-        .scat-item {
-            position: absolute;
-            color: #333333;
-            font-size: 14px;
-        }
-
-        /* 🧸 部屋の真ん中にある不気味な人形 */
-        .doll {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 40px;
+        .dir-btn {
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            font-size: 24px;
             cursor: pointer;
-            transition: 0.5s;
+            display: flex; justify-content: center; align-items: center;
+            transition: 0.2s;
         }
-        .doll:hover {
-            text-shadow: 0 0 10px #ff0000;
+        .dir-btn:hover { background-color: #ffffff; color: #000000; }
+
+        .btn-up { grid-column: 2; grid-row: 1; }
+        .btn-left { grid-column: 1; grid-row: 2; }
+        .btn-down { grid-column: 2; grid-row: 2; }
+        .btn-right { grid-column: 3; grid-row: 2; }
+
+        /* ❌ 壁に激突した時のゲームオーバー画面 */
+        #hazure-screen {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #ffffff; color: #000000; z-index: 9999;
+            justify-content: center; align-items: center; flex-direction: column;
+            font-family: 'MS Gothic', sans-serif;
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
-    <h1>なんかいろいろおいてある部屋</h1>
+    <h1>暗黒の迷路</h1>
+    <div class="status" id="mazeStatus">暗闇が進むべき道を遮っている...</div>
 
-    <!-- 散乱している物 -->
-    <div class="scat-item" style="top: 20%; left: 15%;">壊れた椅子</div>
-    <div class="scat-item" style="top: 25%; left: 70%;">破かれた日記</div>
-    <div class="scat-item" style="top: 75%; left: 30%;">古い空き箱</div>
-    <div class="scat-item" style="top: 60%; left: 80%;">ガラスの破片</div>
+    <div class="maze-controls">
+        <button class="dir-btn btn-up" onclick="move('up')">⬆️</button>
+        <button class="dir-btn btn-left" onclick="move('left')">⬅️</button>
+        <button class="dir-btn btn-down" onclick="move('down')">⬇️</button>
+        <button class="dir-btn btn-right" onclick="move('right')">➡️</button>
+    </div>
 
-    <!-- 🧸 人形を触ると、設計図通り「コード入力部屋」へ進みます -->
-    <div class="doll" onclick="goToCodeRoom()">🧸</div>
+    <div id="hazure-screen">
+        <h2 style="font-size: 36px;">ERROR</h2>
+        <p style="color: #666666;">壁に激突した。これ以上は進めない。</p>
+        <a href="index.html" style="color: #000000; text-decoration: none; border: 1px solid #000000; padding: 10px 30px; margin-top: 40px;">最初からやり直す</a>
+    </div>
 
     <script {nonce}>
-        function goToCodeRoom() {
-            // 💡 触るとあなたのファイル「code-room.html」へワープします！
-            window.location.href = "code-room.html";
+        var step = 0;
+
+        function move(direction) {
+            step++;
+
+            if (step === 1 && direction === 'up') {
+                document.getElementById("mazeStatus").innerText = "奥へ進んだ。風が吹いている。";
+            } 
+            else if (step === 2 && direction === 'right') {
+                document.getElementById("mazeStatus").innerText = "右へ曲がった。出口が近い気がする。";
+            } 
+            else if (step === 3 && direction === 'up') {
+                document.getElementById("mazeStatus").innerText = "迷路を抜けた！";
+                
+                // 💡 修正箇所：迷路を抜けた先を、特殊なパラメータ付きで人形部屋へ飛ばします！
+                // これにより、人形部屋が「2枚目のスライドの色付き状態」に変身してプレイヤーを待ち受けます！
+                window.location.href = "item-room.html?status=maze_cleared";
+            } 
+            else {
+                document.getElementById("hazure-screen").style.display = "flex";
+            }
         }
 
-        // デベロッパーツール対策
         window.addEventListener('keydown', function (e) {
             if (e.key === 'F12') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
