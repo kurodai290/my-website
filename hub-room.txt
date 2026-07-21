@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>分岐の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 { font-size: 26px; color: #ffffff; margin-bottom: 20px; letter-spacing: 5px; }
+        .subtitle { color: #555555; font-size: 14px; margin-bottom: 60px; }
+
+        /* 🚪 2つの扉を横並びにするエリア */
+        .hub-container {
+            display: flex;
+            gap: 50px;
+        }
+
+        .door-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            border: 1px solid #444444;
+            padding: 25px 40px;
+            background-color: #050505;
+            transition: 0.4s;
+            text-align: center;
+            width: 150px;
+        }
+
+        /* マウスを乗せた時の不気味な光の演出 */
+        .door-btn:hover {
+            color: #ff0000;
+            border-color: #ff0000;
+            background-color: #1a0000;
+            box-shadow: 0 0 15px #ff0000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>分岐の間</h1>
+    <div class="subtitle">――２つの道。真実を見るか、試練に挑むか。――</div>
+
+    <!-- 🗺️ 設計通り、ここから動画部屋と答える部屋へ別々に移動できます -->
+    <div class="hub-container">
+        <!-- クリ城すると「watch-room.html（動画を見る部屋）」へ -->
+        <a href="watch-room.html" class="door-btn">👁️ 映像の部屋</a>
+        
+        <!-- クリックすると「answer-room.html（答える部屋）」へ -->
+        <a href="answer-room.html" class="door-btn">📝 答える部屋</a>
+    </div>
+
+    <!-- デベロッパーツール対策 -->
+    <script {nonce}>
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
