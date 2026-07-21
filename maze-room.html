@@ -74,7 +74,7 @@
     </div>
 
     <script {nonce}>
-        // 🧭 迷路の正解ルート：①前(up) ＞ ②右(right) ＞ ③前(up)
+        // 🧭 迷路の正解ルート：①前(up) ＞ ②右(right) ＞ ③前(up) ＞ ③左(left)
         var step = 0;
 
         function move(direction) {
@@ -84,13 +84,16 @@
                 document.getElementById("mazeStatus").innerText = "奥へ進んだ。風が吹いている。";
             } 
             else if (step === 2 && direction === 'right') {
-                document.getElementById("mazeStatus").innerText = "右へ曲がった。出口が近い気がする。";
+                document.getElementById("mazeStatus").innerText = "右へ曲がった。あとどのくらいだろう。";
             } 
             else if (step === 3 && direction === 'up') {
+                document.getElementById("mazeStatus").innerText = "奥へ進んだ。あともう少しだ！";
+            } 
+            else if (step === 4 && direction === 'left') {
                 document.getElementById("mazeStatus").innerText = "迷路を抜けた！";
                 
-                // 💡 修正箇所：ゴールした瞬間、実在するファイル「item-room.html」へ直接ジャンプさせます！
-                window.location.href = "item-room.html";
+                // 💡 修正箇所：ゴールした瞬間、実在するファイル「color-room.html」へ直接ジャンプさせます！
+                window.location.href = "color-room.html";
             } 
             else {
                 // 間違った方向を押すと壁に激突してゲームオーバー
