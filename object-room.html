@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>物置部屋</title>
+    <title>オブジェクトの間</title>
     <style>
         html, body {
             background-color: #000000;
@@ -27,7 +27,7 @@
             margin-bottom: 40px;
         }
 
-        /* 🧸 人形を配置する不気味な棚 */
+        /* 📦 オブジェクトが並ぶエリア */
         .shelf-container {
             background-color: #0a0a0a;
             border: 2px solid #222222;
@@ -40,8 +40,8 @@
             margin-bottom: 30px;
         }
 
-        /* 各人形のボタン */
-        .doll-btn {
+        /* 選択肢ボタン */
+        .obj-btn {
             background-color: #111111;
             color: #ffffff;
             border: 1px solid #444444;
@@ -52,41 +52,42 @@
             font-family: 'MS Mincho', 'serif';
             border-radius: 3px;
         }
-        .doll-btn:hover {
+        .obj-btn:hover {
             color: #000000;
             background-color: #ffffff;
             border-color: #ffffff;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
-        /* テキスト表示エリア */
+        /* メッセージ表示エリア */
         .message-box {
             font-size: 18px;
-            color: #ff0000; /* 警告の赤文字 */
+            color: #ff0000;
             min-height: 40px;
             letter-spacing: 2px;
             margin-top: 10px;
             font-weight: bold;
         }
 
-        /* 部屋移動用リンク */
+        /* 次の部屋（コード入力）への移動リンク */
         .nav-btn {
-            display: inline-block;
+            display: none; /* あたりを見つけるまでは隠しておく */
             margin-top: 40px;
             background-color: #000000;
-            color: #555555;
-            border: 1px solid #333333;
-            padding: 10px 30px;
-            font-size: 14px;
+            color: #ffffff;
+            border: 1px solid #ff0000;
+            padding: 12px 35px;
+            font-size: 16px;
             text-decoration: none;
             transition: 0.3s;
+            font-weight: bold;
         }
         .nav-btn:hover {
-            color: #ffffff;
-            border-color: #666666;
+            background-color: #ff0000;
+            color: #000000;
         }
 
-        /* ⚠️ 呪い・ハズレ演出用の画面赤フラッシュ（一瞬だけ表示） */
+        /* ⚠️ 画面赤フラッシュ演出用 */
         #flash-screen {
             display: none;
             position: fixed;
@@ -94,56 +95,70 @@
             background-color: #8b0000;
             z-index: 9999;
         }
+
+        /* 🔍 角に見えないボタン（透明な隠しボタン） */
+        .hidden-corner-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: default;
+            z-index: 10;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
     <div id="flash-screen"></div>
 
-    <h1>左の間：何かいろいろ置いてある部屋</h1>
-    <div class="hint">――そこには、いくつかの人形が打ち捨てられていた――</div>
+    <h1>左の間：object-room</h1>
+    <div class="hint">――隠された部屋。いくつかの物体が冷たく鎮座している――</div>
 
     <div class="shelf-container">
-        <!-- 設計図に基づいた人形たちの配置 -->
-        <button class="doll-btn" onclick="interactDoll('blue')">青い人形</button>
-        <button class="doll-btn" onclick="interactDoll('yellow')">黄色い人形</button>
-        <button class="doll-btn" onclick="interactDoll('correct')">古びた人形</button>
+        <!-- 想定図に基づいた「はずれ」と「あたり」の分岐ボタン -->
+        <button class="obj-btn" onclick="interactObj('hazure1')">左の物体</button>
+        <button class="obj-btn" onclick="interactObj('atari')">中央の物体</button>
+        <button class="obj-btn" onclick="interactObj('hazure2')">右の物体</button>
     </div>
 
-    <!-- メッセージを表示する不気味なテキストエリア -->
+    <!-- メッセージを表示するエリア -->
     <div id="messageDisplay" class="message-box"></div>
 
+    <!-- あたりを押すと出現する、コード入力部屋へのリンク -->
     <div>
-        <!-- 設計図の下のルート：動画の間へ進むための扉（お手持ちのwatch-room.htmlへ連動） -->
-        <a href="watch-room.html" class="nav-btn">奥の重い扉を開ける（動画の間へ）</a>
-        <br>
-        <a href="left-room.html" class="nav-btn">左の部屋に戻る</a>
+        <a href="code-room.html" id="nextRoomLink" class="nav-btn">コード入力パネルへ進む</a>
     </div>
 
+    <!-- 🔍 想定図の下矢印：角にまた見えないボタン設置 -->
+    <button class="hidden-corner-btn" onclick="interactObj('secret')"></button>
+
     <script>
-        function interactDoll(type) {
+        function interactObj(type) {
             const msg = document.getElementById("messageDisplay");
             const flash = document.getElementById("flash-screen");
+            const nextLink = document.getElementById("nextRoomLink");
 
-            if (type === 'blue') {
-                // 青の人形：ゲームオーバー処理（お手持ちのdark-hazure.htmlへ）
+            if (type === 'hazure1' || type === 'hazure2') {
+                // はずれを選択：ゲームオーバー（お好みのハズレ部屋ファイルに変えてください）
                 flash.style.display = "block";
                 setTimeout(() => {
-                    alert("青い人形に触れた瞬間、冷たい視線を感じた。");
-                    window.location.href = "dark-hazure.html"; 
+                    alert("不気味なノイズが頭の中に響き渡った。");
+                    window.location.href = "left-hazure.html"; 
                 }, 100);
 
-            } else if (type === 'yellow') {
-                // 黄色の人形：ゲームオーバー処理（お手持ちのdark-hazure.htmlへ）
-                flash.style.display = "block";
-                setTimeout(() => {
-                    alert("黄色い人形が奇妙な声をあげて笑った。");
-                    window.location.href = "dark-hazure.html"; 
-                }, 100);
+            } else if (type === 'atari') {
+                // あたりを選択：コード入力部屋への道が開く
+                msg.innerText = "何かがカチリと噛み合う音がした。進む道が現れたようだ。";
+                msg.style.color = "#00ffcc";
+                nextLink.style.display = "inline-block"; // ボタンを表示
 
-            } else if (type === 'correct') {
-                // 正解の人形：コード「9130」が出現
-                msg.innerText = "人形の背中に剥がれかけのラベルがある……「9130」";
+            } else if (type === 'secret') {
+                // 画面右下の角にある、見えない隠しボタンを押した場合
+                msg.style.color = "#ff0000";
+                msg.innerText = "壁の隙間に数字が刻まれている……「93487543987329」";
             }
         }
 
