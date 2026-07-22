@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>運命の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .omikuji-container {
+            background-color: #0a0a0a;
+            border: 2px solid #333333;
+            padding: 50px;
+            border-radius: 5px;
+            text-align: center;
+            min-width: 300px;
+        }
+
+        .draw-btn {
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 15px 40px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .draw-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+        .draw-btn:disabled {
+            background-color: #000000;
+            color: #333333;
+            border-color: #222222;
+            cursor: not-allowed;
+        }
+
+        /* 運勢の結果文字 */
+        .result-text {
+            margin-top: 30px;
+            font-size: 48px;
+            font-weight: bold;
+            min-height: 70px;
+            letter-spacing: 10px;
+        }
+
+        /* ルート移動ボタン */
+        .route-btn {
+            display: inline-block;
+            margin-top: 30px;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 10px 30px;
+            font-size: 16px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .route-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：おみくじの部屋</h1>
+    <div class="hint">――これより先は「運」が道を切り拓く――</div>
+
+    <div class="omikuji-container">
+        <button id="omikujiBtn" class="draw-btn" onclick="drawOmikuji()">運命を引く</button>
+        
+        <!-- 結果（大吉など）が表示される場所 -->
+        <div id="resultDisplay" class="result-text"></div>
+        
+        <!-- 次の部屋への移動リンクが表示される場所 -->
+        <div id="buttonDisplay"></div>
+    </div>
+
+    <script>
+        function drawOmikuji() {
+            const btn = document.getElementById('omikujiBtn');
+            btn.disabled = true; // 連打禁止
+
+            // 運勢をランダムで決定
+            const fortunes = ['大吉', '吉', '凶', '大凶'];
+            const randomResult = fortunes[Math.floor(Math.random() * fortunes.length)];
+
+            const resultDisplay = document.getElementById('resultDisplay');
+            const buttonDisplay = document.getElementById('buttonDisplay');
+
+            // 文字色の設定
+            if (randomResult === '大吉') resultDisplay.style.color = '#ffcc00'; // 金色っぽく
+            if (randomResult === '吉') resultDisplay.style.color = '#00ffcc';
+            if (randomResult === '凶' || randomResult === '大凶') resultDisplay.style.color = '#ff0000'; // 恐怖の赤
+
+            resultDisplay.innerText = randomResult;
+
+            // 1秒後に設計図に基づいたルートへ進むボタンを出現させる
+            setTimeout(() => {
+                if (randomResult === '大吉') {
+                    // 大吉 ➔ next（左の間の端っこにボタンがあることを知らせる画面へ）
+                    buttonDisplay.innerHTML = `<a href="hint-room.html" class="route-btn">先へ進む</a>`;
+                    
+                } else if (randomResult === '吉') {
+                    alert("【吉】……もう一度引き直しだ。");
+                    btn.disabled = false;
+                    resultDisplay.innerText = "";
+                    
+                } else if (randomResult === '凶') {
+                    alert("【凶】……迷路へ戻される。");
+                    // 凶 ➔ 迷路に戻る（maze-room.html）
+                    buttonDisplay.innerHTML = `<a href="maze-room.html" class="route-btn">迷路に戻る</a>`;
+                    
+                } else if (randomResult === '大凶') {
+                    alert("【大凶】……命運は尽きた。");
+                    // 大凶 ➔ ゲームオーバー（dark-hazure.html）
+                    buttonDisplay.innerHTML = `<a href="dark-hazure.html" class="route-btn" style="color: #ff0000; border-color: #ff0000;">ゲームオーバー</a>`;
+                }
+            }, 1000);
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
