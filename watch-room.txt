@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>映像の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 { font-size: 24px; color: #ffffff; margin-bottom: 30px; letter-spacing: 5px; }
+
+        /* 📹 動画を表示する外枠ボックス（ブラウン管テレビ風） */
+        .video-container {
+            width: 480px;
+            height: 270px;
+            background-color: #000000;
+            border: 3px solid #333333;
+            margin-bottom: 50px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+        }
+
+        /* 💡 動画プレイヤーの見た目をぴったり合わせる設定 */
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 黒帯をつけて動画の比率を保つ */
+            outline: none;
+        }
+
+        /* ハブ部屋に戻るためのボタン */
+        .back-btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            border: 1px solid #444444;
+            padding: 10px 40px;
+            background-color: #050505;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            color: #ff0000;
+            border-color: #ff0000;
+            background-color: #1a0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>映像の間</h1>
+
+    <!-- 📹 アップロードした動画ファイルを読み込んで再生するエリア -->
+    <div class="video-container">
+        <!-- 
+          💡 `controls` をつけると一時停止や音量バーが出ます。
+          早送りされたくない場合は `controlslist="nodownload nofscreen noremoteplayback"` などを追加したり、
+          あえて `controls` を消して自動再生（`autoplay`）にするなどの工夫もできます。
+        -->
+        <video id="myVideo" src="horror-video.mp4" controls preload="auto"></video>
+    </div>
+
+    <!-- ハブ部屋に戻るボタン -->
+    <a href="hub-room.html" class="back-btn">部屋を出る</a>
+
+    <!-- デベロッパーツール対策 -->
+    <script {nonce}>
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
