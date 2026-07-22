@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第二の試練</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        /* 🔒 長い暗号を入力する大型の電子ロックボックス */
+        .lock-container {
+            background-color: #0a0a0a;
+            border: 2px solid #333333;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        /* 答えを入力するテキストボックス（長いコードが入るように横幅を広く設定） */
+        input {
+            background-color: #000000;
+            border: 1px solid #555555;
+            color: #ff0000; /* 不気味な赤文字 */
+            font-size: 24px;
+            font-family: monospace;
+            width: 90%;
+            text-align: center;
+            padding: 12px;
+            outline: none;
+            letter-spacing: 2px;
+        }
+
+        input:focus {
+            border-color: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        /* 決定ボタン */
+        .submit-btn {
+            display: block;
+            margin: 30px auto 0 auto;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 12px 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .warn {
+            color: #ff3333;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：コード入力パネルⅡ</h1>
+    <div class="hint">――深淵から持ち帰った、あまりにも長い儀式の羅列を刻め――</div>
+
+    <div class="lock-container">
+        <!-- Enterキーでも送信できるようにしています -->
+        <input type="text" id="megaCodeField" placeholder="??????????????" onkeydown="if(event.key==='Enter') verifyMegaCode()">
+        <button class="submit-btn" onclick="verifyMegaCode()">認証</button>
+        <p class="warn">※間違えると即座に拒絶（ゲームオーバー）されます。</p>
+    </div>
+
+    <script {nonce}>
+        function verifyMegaCode() {
+            var inputVal = document.getElementById("megaCodeField").value.trim();
+            
+            // 💡 隠しルートで手に入る長いパスワードの判定
+            if (inputVal === "93487543987329") {
+                alert("ガシャァァン！！ 巨大な鉄格子のロックが解除された！");
+                // 🗺️ 見事正解したあとの移動先
+                // 次に進ませたい部屋のファイル名（例：maze-room.html や新たなクリア画面など）を指定してください
+                window.location.href = "maze-room.html"; 
+            } else {
+                alert("ブブーーーッ！！ 不正なコードです。");
+                // 記述式を間違えたのでゲームオーバー（dark-hazure.htmlなどへ）
+                window.location.href = "dark-hazure.html";
+            }
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
