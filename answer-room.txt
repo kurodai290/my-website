@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>試練の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        /* 🔒 暗号を入力する金庫のようなボックス */
+        .lock-container {
+            background-color: #0a0a0a;
+            border: 2px solid #333333;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* 答えを入力するテキストボックス */
+        input {
+            background-color: #000000;
+            border: 1px solid #555555;
+            color: #ff0000; /* 不気味な赤文字 */
+            font-size: 32px;
+            font-family: monospace;
+            width: 160px;
+            text-align: center;
+            padding: 10px;
+            outline: none;
+            letter-spacing: 5px;
+        }
+
+        input:focus {
+            border-color: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        /* 決定ボタン */
+        .submit-btn {
+            display: block;
+            margin: 30px auto 0 auto;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 10px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        /* ❌ 間違えた時のはずれ画面（最初は隠しておく） */
+        #fail-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #ffffff; /* 白画面バグ風 */
+            color: #000000;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: 'MS Gothic', sans-serif;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：答える部屋</h1>
+    <div class="hint">――映像が遺したメッセージを紐解け――</div>
+
+    <div class="lock-container">
+        <!-- 答えの文字数制限なし（または3桁目安）で入力 -->
+        <input type="text" id="answerField" placeholder="???" onkeydown="if(event.key==='Enter') verifyAnswer()">
+        <button class="submit-btn" onclick="verifyAnswer()">決定</button>
+    </div>
+
+    <!-- ❌ 【不正解】はずれ画面（無音バグ風） -->
+    <div id="fail-screen">
+        <h2 style="font-size: 36px;">ERROR</h2>
+        <p style="color: #666666;">ちがう。答えはそれではない。</p>
+        <a href="index.html" style="color: #000000; text-decoration: none; border: 1px solid #000000; padding: 10px 30px; margin-top: 40px;">最初からやり直す</a>
+    </div>
+
+    <script {nonce}>
+        function verifyAnswer() {
+            var inputVal = document.getElementById("answerField").value;
+            
+            // 💡 指定された正しい答え「710」の判定
+            if (inputVal === "710") {
+                // 🗺️ 正解すると設計図通り「コード部屋（code-room.html）」へ進み、
+                // そこで最後のコード「9130」が明らかになる流れに繋がります！
+                window.location.href = "code-room.html";
+            } else {
+                document.getElementById("fail-screen").style.display = "flex";
+            }
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
