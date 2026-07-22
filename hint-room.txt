@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>啓示の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        /* 📜 古文書や石碑のようなテキストコンテナ */
+        .parchment {
+            background-color: #050505;
+            border: 1px dashed #555555;
+            padding: 50px;
+            max-width: 600px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.02);
+            border-radius: 2px;
+        }
+
+        h1 {
+            color: #ffcc00; /* 大吉のゴールドを意識した色 */
+            font-size: 24px;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+        }
+
+        .whisper {
+            color: #aaaaaa;
+            font-size: 16px;
+            line-height: 2;
+            letter-spacing: 2px;
+        }
+
+        /* 🔑 設計図の重要なヒントを際立たせる赤文字 */
+        .truth-text {
+            color: #ff0000;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 40px 0;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            line-height: 1.8;
+        }
+
+        /* 探索に戻るためのリンクボタン */
+        .return-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 12px 40px;
+            font-size: 15px;
+            text-decoration: none;
+            transition: 0.3s;
+            font-family: 'MS Mincho', 'serif';
+            letter-spacing: 2px;
+        }
+        .return-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="parchment">
+        <h1>試練の間：啓示の部屋</h1>
+        
+        <div class="whisper">
+            運命の悪戯を潜り抜け、大吉の光を掴みし者よ。<br>
+            この先の深淵を生き延びるための「真実」をここに遺す。
+        </div>
+
+        <!-- 💡 設計図に書かれている秘密のヒントをプレイヤーに伝えます -->
+        <div class="truth-text">
+            「左の間のハズレ……<br>
+            その画面の『左上の端っこ』に、漆黒の隠しボタンが存在する」
+        </div>
+
+        <div class="whisper" style="font-size: 14px; color: #555555;">
+            それを押した時、新たなコードへの道が開かれるだろう。<br>
+            記憶に深く刻み、元の世界へ戻るがよい。
+        </div>
+
+        <!-- 🗺️ ヒントを得たプレイヤーを最初のハブに戻して、新ルート（left-hazure）を探させます -->
+        <a href="hub-room.html" class="return-btn">探索へ戻る</a>
+    </div>
+
+    <!-- デベロッパーツール対策 -->
+    <script {nonce}>
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
