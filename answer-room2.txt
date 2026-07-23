@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第二の試練：回答の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        /* 🔒 記述式問題の入力ボックス */
+        .lock-container {
+            background-color: #0a0a0a;
+            border: 2px solid #333333;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+
+        .question-text {
+            color: #ffffff;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        /* 答えを入力するテキストボックス */
+        input {
+            background-color: #000000;
+            border: 1px solid #555555;
+            color: #ff0000; /* 不気味な赤文字 */
+            font-size: 24px;
+            font-family: 'MS Mincho', 'serif';
+            width: 80%;
+            text-align: center;
+            padding: 10px;
+            outline: none;
+            letter-spacing: 3px;
+        }
+
+        input:focus {
+            border-color: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        /* 決定ボタン */
+        .submit-btn {
+            display: block;
+            margin: 30px auto 0 auto;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 12px 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .warn {
+            color: #ff3333;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：問いの部屋</h1>
+    <div class="hint">――記憶の糸を繰り寄せ、真実を並べよ――</div>
+
+    <div class="lock-container">
+        <!-- 💡 プレイヤーへの問題文 -->
+        <div class="question-text">
+            「color-room」にて目にした、<br>
+            左からの【色の順番】をここに記せ。
+        </div>
+
+        <!-- Enterキーでも送信できるようにしています -->
+        <input type="text" id="colorAnswerField" placeholder="例：赤青黄" onkeydown="if(event.key==='Enter') verifyColorOrder()">
+        <button class="submit-btn" onclick="verifyColorOrder()">回答</button>
+        <p class="warn">※間違えると即座にゲームオーバーとなります。</p>
+    </div>
+
+    <script {nonce}>
+        function verifyColorOrder() {
+            var inputVal = document.getElementById("colorAnswerField").value.trim();
+            
+            // 💡 【重要】ここに実際の「color-room」の左からの色の正解を入力してください。
+            // プレイヤーが打ちそうな表記（ひらがな、カタカナなど）に合わせて変更可能です。
+            // 現在は例として「赤青黄」に設定しています。
+            const correctAnswer = "赤青黄"; 
+
+            if (inputVal === correctAnswer) {
+                alert("……正解だ。封印が解かれた。");
+                // 🗺️ 正解したあとの次の移動先
+                // 先ほど作った「コード公開ページ（code-release.html）」へ進む場合はここを指定します
+                window.location.href = "code-release.html"; 
+            } else {
+                alert("……記憶が違っているようだ。");
+                // 間違えたらゲームオーバー（dark-hazure.htmlなどへ）
+                window.location.href = "dark-hazure.html";
+            }
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
