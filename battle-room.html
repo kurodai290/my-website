@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>死闘の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #ff0000; /* 警告の赤 */
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        /* ⏳ 制限時間タイマーの表示 */
+        .timer-box {
+            font-size: 24px;
+            color: #ff3333;
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* ⚔️ バトル画面のメインコンテナ */
+        .battle-container {
+            background-color: #0a0a0a;
+            border: 2px solid #555555;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* ステータス（HP）表示 */
+        .status-area {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            font-size: 18px;
+            border-bottom: 1px solid #333333;
+            padding-bottom: 15px;
+        }
+        .hp-bar { color: #ff0000; font-weight: bold; }
+
+        /* バトルの実況ログ */
+        .log-box {
+            background-color: #000000;
+            border: 1px solid #222222;
+            height: 100px;
+            padding: 15px;
+            text-align: left;
+            font-size: 15px;
+            line-height: 1.6;
+            overflow-y: auto;
+            margin-bottom: 30px;
+            color: #aaaaaa;
+        }
+
+        /* コマンドボタン */
+        .command-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .cmd-btn {
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .cmd-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>🚨 警告：未知の敵が接近 🚨</h1>
+    
+    <!-- カウントダウンタイマー -->
+    <div class="timer-box">残り時間: <span id="timeLeft">60</span>秒</div>
+
+    <div class="battle-container">
+        <!-- HP表示エリア -->
+        <div class="status-area">
+            <div>あなた: <span id="playerHp" class="hp-bar">100</span> / 100</div>
+            <div>謎の影: <span id="enemyHp" class="hp-bar">150</span> / 150</div>
+        </div>
+
+        <!-- バトルの行動履歴（ログ） -->
+        <div id="battleLog" class="log-box">
+            不気味な影が目の前に立ちはだかった！<br>
+            空間が歪み、脱出の扉が閉ざされる……。
+        </div>
+
+        <!-- 行動コマンド -->
+        <div class="command-area">
+            <button class="cmd-btn" onclick="playerAction('attack')">渾身の突撃</button>
+            <button class="cmd-btn" onclick="playerAction('counter')">反撃の構え</button>
+            <button class="cmd-btn" onclick="playerAction('heal')">精神統一（回復）</button>
+            <button class="cmd-btn" onclick="playerAction('light')">光を放つ（弱体）</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        // バトルのパラメータ設定
+        let player = { hp: 100, maxHp: 100, isCountering: false };
+        let enemy = { hp: 150, isWeak: false };
+        let timeLeft = 60;
+        let timerInterval;
+
+        // ⏱️ タイマーのカウントダウン開始
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById("timeLeft").innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                battleOver(false, "時間切れ……。暗闇に飲み込まれた。");
+            }
+        }, 1000);
+
+        // ログを追加する関数
+        function addLog(text) {
+            const logBox = document.getElementById("battleLog");
+            logBox.innerHTML += "<br>" + text;
+            logBox.scrollTop = logBox.scrollHeight; // 常に最新のログにスクロール
+        }
+
+        // 🔄 プレイヤーの行動処理
+        function playerAction(type) {
+            if (player.hp <= 0 || enemy.hp <= 0) return;
+
+            player.isCountering = false; // 構えをリセット
+
+            if (type === 'attack') {
+                let dmg = enemy.isWeak ? 40 : 20;
+                enemy.hp = Math.max(0, enemy.hp - dmg);
+                addLog(`⚔️ あなたの攻撃！敵に ${dmg} のダメージを与えた！`);
+                enemy.isWeak = false; // 弱体化解除
+
+            } else if (type === 'counter') {
+                player.isCountering = true;
+                addLog("🛡️ あなたは反撃の構えをとった。");
+
+            } else if (type === 'heal') {
+                let healAmount = 30;
+                player.hp = Math.min(player.maxHp, player.hp + healAmount);
+                addLog(`💚 精神を集中させた。あなたのHPが ${healAmount} 回復した。`);
+
+            } else if (type === 'light') {
+                enemy.isWeak = true;
+                addLog("✨ 手元の光を放った！敵の体勢が崩れ、隙が生じた！");
+            }
+
+            // 画面の数値を更新
+            document.getElementById("enemyHp").innerText = enemy.hp;
+            document.getElementById("playerHp").innerText = player.hp;
+
+            // 敵の生存チェック
+            if (enemy.hp <= 0) {
+                clearInterval(timerInterval);
+                setTimeout(() => battleOver(true, "謎の影は霧のように消え去った。戦闘に勝利した！"), 500);
+                return;
+            }
+
+            // 敵の反撃ターンへ
+            setTimeout(enemyTurn, 800);
+        }
+
+        // 👹 敵の行動処理（AI）
+        function enemyTurn() {
+            if (player.hp <= 0 || enemy.hp <= 0) return;
+
+            // ランダムで敵の行動を決定
+            let rand = Math.random();
+            if (rand < 0.7) {
+                // 通常攻撃
+                if (player.isCountering) {
+                    let counterDmg = 35;
+                    enemy.hp = Math.max(0, enemy.hp - counterDmg);
+                    document.getElementById("enemyHp").innerText = enemy.hp;
+                    addLog(`⚡ 見事なカウンター！敵の攻撃を跳ね返し、 ${counterDmg} のダメージを与えた！`);
+                    
+                    if (enemy.hp <= 0) {
+                        clearInterval(timerInterval);
+                        setTimeout(() => battleOver(true, "反撃によって敵を完全に打ち砕いた！"), 500);
+                        return;
+                    }
+                } else {
+                    let dmg = 25;
+                    player.hp = Math.max(0, player.hp - dmg);
+                    addLog(`💥 敵の鋭い爪が襲いかかる！あなたは ${dmg} のダメージを受けた！`);
+                }
+            } else {
+                // 強攻撃（溜め行動）
+                enemy.isWeak = true;
+                addLog("👁️ 敵の不気味な瞳が怪しく光る……！次の一撃は危険だ！");
+            }
+
+            // 画面の数値を更新
+            document.getElementById("playerHp").innerText = player.hp;
+
+            // プレイヤーの生存チェック
+            if (player.hp <= 0) {
+                clearInterval(timerInterval);
+                setTimeout(() => battleOver(false, "力尽きてしまった……。"), 500);
+            }
+        }
+
+        // 🏁 バトルの勝敗決定
+        function battleOver(isWin, message) {
+            alert(message);
+            if (isWin) {
+                // 🗺️ 勝利した時の次の移動先
+                // 最終目的地の「コード公開ページ（code-release.html）」へ進ませます
+                window.location.href = "code-release.html";
+            } else {
+                // 敗北したらゲームオーバー（dark-hazure.htmlなどへ）
+                window.location.href = "dark-hazure.html";
+            }
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
