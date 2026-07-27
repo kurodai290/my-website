@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>鬼ごっこの迷宮Ⅱ：限界突破</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            color: #ff3333;
+            font-size: 24px;
+            letter-spacing: 5px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        /* 📊 現在の進行度を表示（1/10ステップ） */
+        .progress-box {
+            font-size: 16px;
+            color: #ffcc00;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        /* ⏳ 5秒制限タイマー */
+        .timer-box {
+            font-size: 28px;
+            color: #ff0000;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 5px 20px;
+            border: 1px solid #ff0000;
+        }
+
+        /* 🗺️ 迷路コンテナ */
+        .maze-container {
+            background-color: #0a0a0a;
+            border: 2px solid #333333;
+            padding: 30px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .status-text {
+            font-size: 17px;
+            color: #aaaaaa;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            min-height: 55px;
+        }
+
+        /* 選択肢ボタン */
+        .choice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .move-btn {
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .move-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* 👹 捕まった時のドアップ襲撃画面 */
+        #jumpscare-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #000000;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #jumpscare-screen img {
+            width: 80%;
+            max-width: 500px;
+            animation: attackZoom 0.4s ease-out forwards;
+        }
+        .gameover-text {
+            color: #ff0000;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 10px;
+            margin-top: 30px;
+            text-shadow: 0 0 15px #ff0000;
+            opacity: 0;
+            animation: fadeInText 0.5s 0.4s forwards;
+        }
+        .retry-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid #ffffff;
+            padding: 10px 30px;
+            opacity: 0;
+            animation: fadeInText 0.5s 0.8s forwards;
+        }
+
+        @keyframes attackZoom {
+            0% { transform: scale(0.2) rotate(-5deg); filter: brightness(0.2); }
+            100% { transform: scale(1.3) rotate(0deg); filter: brightness(1.2); }
+        }
+        @keyframes fadeInText {
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="jumpscare-screen">
+        <img src="./obake.png" alt="追跡者">
+        <div class="gameover-text">捕 ま っ た</div>
+        <a href="index.html" class="retry-link">最初からやり直す</a>
+    </div>
+
+    <h1>🏃 鬼ごっこの迷宮Ⅱ 🏃</h1>
+    
+    <!-- 現在何歩目かを表示 -->
+    <div class="progress-box">生存深度: <span id="progress">1</span> / 10</div>
+    
+    <!-- 5秒カウントダウンタイマー -->
+    <div class="timer-box">あと <span id="timer">5</span> 秒</div>
+
+    <div class="maze-container">
+        <div id="mazeStatus" class="status-text">
+            背後からものすごい勢いで足音が迫っている……！<br>
+            迷っている暇はない、直感で扉を突き進め！
+        </div>
+
+        <div class="choice-grid">
+            <button class="move-btn" onclick="move('up')">前へ進む</button>
+            <button class="move-btn" onclick="move('down')">後ろを向く</button>
+            <button class="move-btn" onclick="move('left')">左の通路</button>
+            <button class="move-btn" onclick="move('right')">右の通路</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        // 🗺️ 10ステップの正解ルート（up, left, right, down をランダムに配置）
+        // 覚えゲーとしても非常に歯ごたえのある並びにしています！
+        const correctRoute = ['up', 'left', 'right', 'up', 'right', 'left', 'down', 'up', 'left', 'right'];
+        
+        // 各ステップごとの不気味な実況テキスト
+        const statusTexts = [
+            "背後からものすごい勢いで足音が迫っている……！<br>迷っている暇はない、直感で扉を突き進め！",
+            "よし、引き離したか……？<br>いや、まだ追ってくる！左か右か、それとも……！",
+            "通路が狭くなってきた……！<br>奴の吐息がすぐ後ろから聞こえる！急げ！",
+            "前方にまた十字路だ！<br>どこへ逃げればいい！？影がすぐそこまで来ている！",
+            "曲がり角の先が真っ暗だ！<br>立ち止まれば死ぬ、進む方向を叫べ！",
+            "右から冷たい風が吹いた……！<br>足音が二つに増えた気がする、どこへ行く！？",
+            "行き止まりか！？壁にぶつかった！<br>いや、まだ道はあるはずだ、早く選択しろ！",
+            "奴が笑った声が響いた……！<br>精神が削られる、光を求めて突き進め！",
+            "あそこに光の亀裂が見える！<br>脱出は近い、あと少しだけ足を動かせ！",
+            "目の前が出口の扉だ！<br>鍵は開いている！最後の選択を叩き込め！"
+        ];
+
+        let currentStep = 0; // 0からスタートして9まで（全10ステージ）
+        let timeLeft = 5;
+        let timerInterval;
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 5;
+            document.getElementById("timer").innerText = timeLeft;
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById("timer").innerText = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    triggerGameOver();
+                }
+            }, 1000);
+        }
+
+        window.onload = function() {
+            startTimer();
+        }
+
+        // 🔄 移動選択時の処理
+        function move(direction) {
+            if (timeLeft <= 0) return;
+
+            // 現在のステップの正解と一致しているかチェック
+            if (direction === correctRoute[currentStep]) {
+                currentStep++; // 次のステップへ進む
+                
+                // 10ステップ全てクリアした場合
+                if (currentStep >= 10) {
+                    clearInterval(timerInterval);
+                    alert("完全脱出成功！奴を引き離し、光の向こうへ滑り込んだ！");
+                    window.location.href = "code-release.html"; // 最終ページへ
+                    return;
+                }
+
+                // 画面のテキストと歩数表示を更新
+                document.getElementById("progress").innerText = currentStep + 1;
+                document.getElementById("mazeStatus").innerHTML = statusTexts[currentStep];
+                startTimer(); // タイマーを5秒にリセット
+            } else {
+                // 間違えたら即ゲームオーバー
+                triggerGameOver();
+            }
+        }
+
+        function triggerGameOver() {
+            clearInterval(timerInterval);
+            document.getElementById("jumpscare-screen").style.display = "flex";
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
