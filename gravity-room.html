@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>重力パズルの間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #33ccff; /* 引力をイメージしたサイバーなライトブルー */
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(51, 204, 255, 0.4);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .room-container {
+            background-color: #050f15;
+            border: 2px solid #004466;
+            padding: 35px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(51, 204, 255, 0.05);
+        }
+
+        .story-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #aaaaaa;
+        }
+
+        /* 重力の制御ボタンの格子 */
+        .gravity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .g-btn {
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #004466;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+            transition: 0.2s;
+        }
+        .g-btn:hover {
+            background-color: #33ccff;
+            color: #000000;
+            box-shadow: 0 0 10px #33ccff;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：重力パズルの部屋</h1>
+    <div class="hint">――歪む磁場。正解の引力を選択し、扉の鍵を落とせ――</div>
+
+    <div class="room-container">
+        <!-- パズルの現在の状況を示すテキスト -->
+        <div id="puzzleStatus" class="story-text">
+            部屋の頭上に、次のステージへ続く「鍵」が引っかかっている。<br>
+            手元のレバーで【部屋の重力の向き】を変えれば、鍵がこちらへ落ちてくるはずだ。<br>
+            現在の重力の向き：<span style="color:#33ccff; font-weight:bold;">[ 下（通常） ]</span>
+        </div>
+
+        <!-- 重力切り替えコマンド -->
+        <div class="gravity-grid">
+            <button class="g-btn" onclick="changeGravity('up')">重力を「上」にする</button>
+            <button class="g-btn" onclick="changeGravity('left')">重力を「左」にする</button>
+            <button class="g-btn" onclick="changeGravity('right')">重力を「右」にする</button>
+            <button class="g-btn" onclick="changeGravity('down')">重力を「下」にする</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        // 💡 パズルの正解手順：上 ➔ 右 の順番で重力を変えるとクリア！
+        let step = 1;
+
+        function changeGravity(direction) {
+            const status = document.getElementById("puzzleStatus");
+
+            if (step === 1) {
+                if (direction === 'up') {
+                    step = 2;
+                    status.innerHTML = "ゴゴゴ……！ 重力が上に反転した！<br>鍵が天井へと滑り落ち、右側の奇妙なダクトの中に吸い込まれた！<br>現在の重力の向き：<span style='color:#ffcc00; font-weight:bold;'>[ 上 ]</span>";
+                } else {
+                    triggerFail();
+                }
+            } 
+            else if (step === 2) {
+                if (direction === 'right') {
+                    alert("ガチャリ！ 重力を右に変えたことで、鍵がダクトを通り抜けて手元に落ちてきた！");
+                    // 🗺️ 鍵を手に入れて、設計図通り次の「10分の5の確率部屋」へ直行します！
+                    window.location.href = "button-room5.html";
+                } else {
+                    triggerFail();
+                }
+            }
+        }
+
+        function triggerFail() {
+            alert("ドガシャァン！！ 誤った重力をかけたため、部屋の防衛システムが作動し、押し潰された！");
+            window.location.href = "dark-hazure2.html";
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
