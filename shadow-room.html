@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>影の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #666666; /* 影をイメージした不気味なグレー */
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .hint {
+            color: #333333;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .room-container {
+            background-color: #050505;
+            border: 2px solid #222222;
+            padding: 35px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
+        }
+
+        .story-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #888888;
+        }
+
+        /* 👤 影を追いかける3つの選択肢ボタン */
+        .shadow-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .s-btn {
+            background-color: #0a0a0a;
+            color: #888888;
+            border: 1px solid #333333;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+            transition: 0.3s;
+            letter-spacing: 2px;
+        }
+        .s-btn:hover {
+            background-color: #1c1c1c;
+            color: #ffffff;
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：影の部屋</h1>
+    <div class="hint">――光なき場所にうごめくもの。本体と異なる挙動の影を追え――</div>
+
+    <div class="room-container">
+        <div class="story-text">
+            松明（たいまつ）の灯りに照らされた壁に、3つの人影が伸びている……。<br>
+            しかし、そのうちの1つだけが、あなたの動きと完全にズレて動いているようだ。<br>
+            どの影の奥にある扉へ進むべきだろうか。
+        </div>
+
+        <div class="shadow-grid">
+            <!-- 💡 正解は「あなたと逆に動く3番目の影」としています -->
+            <button class="s-btn" onclick="chooseShadow(1)">右手を挙げた時、右手を挙げる影</button>
+            <button class="s-btn" onclick="chooseShadow(2)">首を傾げた時、同じように傾げる影</button>
+            <button class="s-btn" onclick="chooseShadow(3)">あなたが静止した時、不気味に手招きした影</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        function chooseShadow(number) {
+            if (number === 3) {
+                alert("ガシャリ！ 意思を持った影が壁の奥へと消え去り、次のエリアへの扉が開いた！");
+                // 🗺️ 次の「10分の6の確率部屋」へ直接ワープします！
+                window.location.href = "button-room6.html";
+            } else {
+                alert("ゾワッ！ 影が突然壁から飛び出し、あなたの首を締め上げた……！");
+                window.location.href = "dark-hazure2.html";
+            }
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
