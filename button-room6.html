@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第六のボタンの間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .button-container {
+            background-color: #0a0a0a;
+            border: 2px solid #444444;
+            padding: 50px;
+            border-radius: 5px;
+            text-align: center;
+            min-width: 300px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.03);
+        }
+
+        /* 運命を決める漆黒のボタン */
+        .fate-btn {
+            background-color: #111111;
+            color: #ff3333;
+            border: 2px solid #555555;
+            padding: 25px 50px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'MS Mincho', 'serif';
+            letter-spacing: 5px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+        }
+        .fate-btn:hover {
+            background-color: #ff3333;
+            color: #000000;
+            border-color: #ff3333;
+            box-shadow: 0 0 25px #ff3333;
+        }
+        .fate-btn:disabled {
+            background-color: #000000;
+            color: #333333;
+            border-color: #222222;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .result-box {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #aaaaaa;
+            min-height: 40px;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>10分の6の試練：button-room6</h1>
+    <div class="hint">――深淵はさらに加速する。10分の6の運命を選択せよ――</div>
+
+    <div class="button-container">
+        <button id="gambleBtn6" class="fate-btn" onclick="tryLuck6()">運命を起動</button>
+        <div id="statusResult6" class="result-box">ボタンが静かにあなたの指を待っている……。</div>
+    </div>
+
+    <script {nonce}>
+        function tryLuck6() {
+            const btn = document.getElementById('gambleBtn6');
+            const status = document.getElementById('statusResult6');
+            
+            btn.disabled = true; 
+            status.style.color = "#aaaaaa";
+            status.innerHTML = "確率を計算中…… 記憶の残滓を測定しています……";
+
+            setTimeout(() => {
+                // 1から10までのランダムな整数
+                const randomNumber = Math.floor(Math.random() * 10) + 1;
+
+                // 💡 10分の6の確率（1, 2, 3, 4, 5, 6が出たら見事アタリ！）
+                if (randomNumber <= 6) {
+                    // アタリ：さらに50%の確率で中盤の2つのパズル部屋に分岐
+                    const nextRoute = Math.random() < 0.5 ? "memory-room.html" : "time-attack.html";
+                    
+                    status.style.color = "#00ffcc";
+                    status.innerHTML = "【認証成功】 10分の6の運命線を突破した。";
+
+                    setTimeout(() => {
+                        if (nextRoute === "memory-room.html") {
+                            alert("ガシャリ。あなたの脳内に、これまでに通ってきた部屋の幻影が映し出された。");
+                        } else {
+                            alert("チクタクチクタク……！ 部屋の壁に巨大なデジタルタイマーが出現した！");
+                        }
+                        window.location.href = nextRoute;
+                    }, 1000);
+
+                } else {
+                    // ハズレ（40%の確率）：既存のゲームオーバーへ
+                    status.style.color = "#ff0000";
+                    status.innerHTML = "【拒絶】 運命の乱れを感知。破滅しました。";
+
+                    setTimeout(() => {
+                        alert("不合格。暗闇があなたを消滅させた。");
+                        window.location.href = "dark-hazure2.html";
+                    }, 1000);
+                }
+            }, 1500);
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
