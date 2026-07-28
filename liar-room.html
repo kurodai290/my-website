@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>嘘つきの間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #33ff33; /* 毒々しい緑色 */
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(51, 255, 51, 0.4);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .room-container {
+            background-color: #051005;
+            border: 2px solid #006600;
+            padding: 35px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(51, 255, 51, 0.05);
+        }
+
+        .paper-box {
+            text-align: left;
+            background-color: #000000;
+            border: 1px dashed #006600;
+            padding: 15px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #00ff33;
+            margin-bottom: 30px;
+        }
+
+        .door-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+        .door-btn {
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 20px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+            transition: 0.2s;
+        }
+        .door-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：嘘つきの部屋</h1>
+    <div class="hint">――真実はたった一つ。拒絶された言葉の裏を読め――</div>
+
+    <div class="room-container">
+        <div class="paper-box">
+            壁に3つの不気味な張り紙がある……。<br>
+            「この中で、真実を言っている紙は1枚だけ。残りの2枚はすべて嘘だ」<br><br>
+            📄 張り紙Ａ：『この「扉Ａ」が正解の出口だ。』<br>
+            📄 張り紙Ｂ：『張り紙Ａは真っ赤な嘘を吐いている。』<br>
+            📄 張り紙Ｃ：『この「扉Ｃ」はハズレ（ゲームオーバー）だ。』
+        </div>
+
+        <div class="door-grid">
+            <button class="door-btn" onclick="chooseDoor('A')">扉 Ａ</button>
+            <button class="door-btn" onclick="chooseDoor('B')">扉 Ｂ</button>
+            <button class="door-btn" onclick="chooseDoor('C')">扉 Ｃ</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        function chooseDoor(letter) {
+            if (letter === 'C') {
+                alert("カチャリ……。正解だ。壁の裏に隠された秘密の部屋への入り口が開いた。");
+                // 💡 水浸しルートと同じように、「最後のコードのヒントルーム」へ飛ばします！
+                window.location.href = "hint-room.html";
+            } else {
+                alert("うわあああ！ 扉を開けた瞬間、底なしの落とし穴に突き落とされた！");
+                window.location.href = "dark-hazure2.html";
+            }
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
