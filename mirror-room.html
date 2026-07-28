@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>鏡の中の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        /* 🪞 部屋のコンテナ全体を左右反転（鏡文字）にするホラー演出 */
+        .mirror-effect-box {
+            transform: scaleX(-1);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            background-color: #0a0510;
+            border: 2px solid #440066;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(153, 0, 255, 0.05);
+        }
+
+        h1 {
+            color: #b366ff; /* 鏡の世界をイメージした怪しい紫 */
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(179, 102, 255, 0.4);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .story-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #aaaaaa;
+        }
+
+        /* 答えを入力するテキストボックス */
+        input {
+            background-color: #000000;
+            border: 1px solid #440066;
+            color: #b366ff;
+            font-size: 24px;
+            width: 150px;
+            text-align: center;
+            padding: 8px;
+            outline: none;
+            letter-spacing: 2px;
+            /* 入力される文字自体も鏡文字にするため反転 */
+            transform: scaleX(-1); 
+        }
+
+        .submit-btn {
+            display: block;
+            margin: 25px auto 0 auto;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 10px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <!-- 💡 この枠の中の文字やボタンがすべて左右反転します -->
+    <div class="mirror-effect-box">
+        <h1>試練の間：鏡の中の部屋</h1>
+        <div class="hint">――映し出された虚像。真実の姿を、裏側から覗き込め――</div>
+
+        <div class="story-text">
+            巨大な姿見の前に立っているが、鏡の中のあなたはあなたではない……？<br>
+            世界のすべてが左右逆転している。<br>
+            ガラスに浮かび上がった鏡文字には「カガミ」と刻まれているようだ。
+        </div>
+
+        <div>
+            <!-- Enterキーでも送信できるようにしています -->
+            <input type="text" id="mirrorInput" placeholder="???" onkeydown="if(event.key==='Enter') checkMirror()">
+            <button class="submit-btn" onclick="checkMirror()">虚像を暴く</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        function checkMirror() {
+            const ans = document.getElementById("mirrorInput").value.trim();
+            
+            // 💡 正解は「カガミ」またはひらがな
+            if (ans === "カガミ" || ans === "かがみ") {
+                alert("パリィィン！！ 目の前の鏡が粉々に砕け散り、隠された通路が現れた！");
+                // 🗺️ 秘密のヒントルームへ進みます
+                window.location.href = "hint-room.html";
+            } else {
+                alert("ブブーッ！ 鏡の中の『あなた』が不気味にニヤリと笑った。そのまま引きずり込まれた。");
+                window.location.href = "dark-hazure2.html";
+            }
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
