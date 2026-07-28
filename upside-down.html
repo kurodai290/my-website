@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>上下反転の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+            
+            /* 🌀 画面全体を180度回転させて逆さまにするホラー演出 */
+            transform: rotate(180deg);
+        }
+
+        h1 {
+            color: #ff6600; /* 異変を察知させる不気味なオレンジ */
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 102, 0, 0.4);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .room-container {
+            background-color: #100a05;
+            border: 2px solid #663300;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(255, 102, 0, 0.05);
+        }
+
+        .story-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #aaaaaa;
+        }
+
+        /* 答えを入力するテキストボックス */
+        input {
+            background-color: #000000;
+            border: 1px solid #663300;
+            color: #ff6600;
+            font-size: 24px;
+            width: 150px;
+            text-align: center;
+            padding: 8px;
+            outline: none;
+            letter-spacing: 2px;
+        }
+
+        .submit-btn {
+            display: block;
+            margin: 25px auto 0 auto;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 10px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：上下反転の部屋</h1>
+    <div class="hint">――天地の逆転。狂った世界で、真実の言葉を紡げ――</div>
+
+    <div class="room-container">
+        <div class="story-text">
+            凄まじい目まいに襲われ、気づけば天井が足元になっていた……。<br>
+            視界が完全にひっくり返っている。<br>
+            逆さまになった扉の文字盤には「テンチ」と入力せよ、と刻まれている。
+        </div>
+
+        <div>
+            <!-- Enterキーでも送信できるようにしています -->
+            <input type="text" id="upsideInput" placeholder="???" onkeydown="if(event.key==='Enter') checkUpside()">
+            <button class="submit-btn" onclick="checkUpside()">重力に抗う</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        function checkUpside() {
+            const ans = document.getElementById("upsideInput").value.trim();
+            
+            // 💡 正解は「テンチ」（またはひらがなでも許容できるようにしています）
+            if (ans === "テンチ" || ans === "てんち") {
+                alert("ガシャリ！ 天井のハッチが開き、元の重力へと吸い込まれていく……！");
+                // 🗺️ 設計図通り、秘密のヒントルームへ進みます！
+                window.location.href = "hint-room.html";
+            } else {
+                alert("ブブーッ！ パネルが拒絶反応を起こした！ そのまま暗黒の天井へ突き落とされた。");
+                // 間違えたら既存のゲームオーバー部屋へ
+                window.location.href = "dark-hazure2.html";
+            }
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
