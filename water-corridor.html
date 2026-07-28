@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>水浸しの部屋</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #0099ff; /* 水をイメージした青色 */
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 153, 255, 0.5);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .room-container {
+            background-color: #050a10;
+            border: 2px solid #003366;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(0, 153, 255, 0.1);
+        }
+
+        .story-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #aaaaaa;
+        }
+
+        /* 🔘 音を聞くためのボタン */
+        .valve-btn {
+            background-color: #001122;
+            color: #0099ff;
+            border: 1px solid #004488;
+            padding: 12px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+            margin-bottom: 25px;
+        }
+        .valve-btn:hover {
+            background-color: #0099ff;
+            color: #000000;
+        }
+
+        /* 答えの入力エリア */
+        input {
+            background-color: #000000;
+            border: 1px solid #004488;
+            color: #0099ff;
+            font-size: 24px;
+            width: 120px;
+            text-align: center;
+            padding: 8px;
+            outline: none;
+        }
+
+        .submit-btn {
+            display: block;
+            margin: 25px auto 0 auto;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 10px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：水浸しの部屋</h1>
+    <div class="hint">――足元を満たす黒い水。漏れ出す音の数に耳を澄ませ――</div>
+
+    <div class="room-container">
+        <div class="story-text">
+            ガチャリと扉が閉まり、ロックされた。<br>
+            部屋の隅にある古いパイプから、水が激しく噴き出している。<br>
+            壁のコントロールパネルには「漏出回数を入力せよ」と刻まれている……。
+        </div>
+
+        <!-- 音をアラートで確認するボタン -->
+        <button class="valve-btn" onclick="listenValve()">パイプの音を聞く</button>
+
+        <div>
+            <p style="font-size:14px; color:#666;">水が吹き出した正確な回数は？</p>
+            <input type="text" id="waterInput" placeholder="0" onkeydown="if(event.key==='Enter') checkWater()">
+            <button class="submit-btn" onclick="checkWater()">パネルを操作する</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        // 💡 吹き出す音の回数（正解）を「4回」に設定しています
+        function listenValve() {
+            alert("シューー……ドボドボッ！……ドボドボッ！……ドボドボッ！……ドボドボッ！……シュルル……\n（不気味な水の音が部屋に響き渡った）");
+        }
+
+        function checkWater() {
+            const ans = document.getElementById("waterInput").value.trim();
+            if (ans === "4") {
+                alert("カチリ……。パネルが緑色に点灯し、目の前のハッチがゆっくりと開いた！");
+                // 🗺️ クリア後の移動先：次は第二のバトル（battle-room2.html）へ合流します！
+                window.location.href = "battle-room2.html";
+            } else {
+                alert("ピピッ……！ 不正解。部屋の天井まで一気に水が満ちていく！");
+                // 間違えたらゲームオーバー部屋へ
+                window.location.href = "dark-hazure.html";
+            }
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
