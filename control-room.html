@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>監視の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #00ff66; /* サイバー感とホラーが混ざったネオングリーン */
+            font-size: 24px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* 🖥️ モニターが並ぶコントロールパネル */
+        .panel-container {
+            background-color: #050505;
+            border: 2px solid #222222;
+            padding: 30px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.05);
+        }
+
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* モニターボタン */
+        .monitor-btn {
+            background-color: #001100;
+            color: #00ff66;
+            border: 1px solid #004411;
+            padding: 15px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .monitor-btn:hover {
+            background-color: #00ff66;
+            color: #000000;
+            box-shadow: 0 0 10px #00ff66;
+        }
+        /* 調査完了したモニター */
+        .monitor-btn.checked {
+            color: #333333;
+            border-color: #222222;
+            background-color: #000000;
+            cursor: default;
+            box-shadow: none;
+        }
+
+        /* テキスト表示エリア */
+        .status-text {
+            font-size: 16px;
+            color: #aaaaaa;
+            min-height: 50px;
+            letter-spacing: 1px;
+            line-height: 1.6;
+            border-top: 1px solid #222222;
+            padding-top: 15px;
+        }
+
+        /* 全て調査すると出現する「奥へ進む」ボタン */
+        .next-btn {
+            display: none;
+            margin-top: 25px;
+            background-color: #000000;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            padding: 12px 40px;
+            font-size: 15px;
+            text-decoration: none;
+            transition: 0.3s;
+            font-family: 'MS Mincho', 'serif';
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .next-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：監視室</h1>
+    <div class="hint">――無数の電子の眼が、この歪んだ世界を映し出している――</div>
+
+    <div class="panel-container">
+        <!-- 4つの監視モニター -->
+        <div class="monitor-grid">
+            <button id="mon1" class="monitor-btn" onclick="checkMonitor(1)">モニター[A]</button>
+            <button id="mon2" class="monitor-btn" onclick="checkMonitor(2)">モニター[B]</button>
+            <button id="mon3" class="monitor-btn" onclick="checkMonitor(3)">モニター[C]</button>
+            <button id="mon4" class="monitor-btn" onclick="checkMonitor(4)">モニター[D]</button>
+        </div>
+
+        <!-- 調べた内容が表示されるログ -->
+        <div id="logDisplay" class="status-text">
+            部屋の中央に古びた操作パネルがある。<br>
+            いくつかの画面に映像がノイズ混じりで映っているようだ。
+        </div>
+
+        <!-- 4つ全て調べるとJavaScriptで表示されます -->
+        <a href="next-area.html" id="escapeBtn" class="next-btn">さらに「奥のエリア」へ進む</a>
+    </div>
+
+    <script {nonce}>
+        // 調査状態の管理
+        let checkedMonitors = { 1: false, 2: false, 3: false, 4: false };
+
+        function checkMonitor(num) {
+            if (checkedMonitors[num]) return; // すでに調べていたら何もしない
+
+            const log = document.getElementById("logDisplay");
+            const btn = document.getElementById("mon" + num);
+
+            // モニターごとのテキスト描写（世界の広がりや過去の伏線）
+            if (num === 1) {
+                log.innerHTML = "【モニターA：最初の部屋の映像】<br>あなたが最初に目を覚ました不気味なハブ部屋が映っている。誰もいない。しかし、何かが壁の裏で動いたような影が見えた。";
+            } else if (num === 2) {
+                log.innerHTML = "【モニターB：object-roomの映像】<br>先ほどあなたが潜り抜けたオブジェクトの部屋だ。はずれの物体の影から、あの赤黒い『怪異の顔』がこちらをジッと見つめている……。";
+            } else if (num === 3) {
+                log.innerHTML = "【モニターC：未確認のエリアⅠ】<br>見たことのない『水浸しの廊下』が映っている。画面の奥には、濁った水面から巨大な何かの背ビレのようなものが突き出しているのが見える……。";
+            } else if (num === 4) {
+                log.innerHTML = "【モニターD：未確認のエリアⅡ】<br>砂嵐（スノーノイズ）が激しい。ノイズの隙間から、無数の時計が壁一面に掛けられ、すべての針が異常なスピードで逆回転している部屋が一瞬だけ見えた。";
+            }
+
+            // 調べたボタンの見た目を変更
+            btn.classList.add("checked");
+            checkedMonitors[num] = true;
+
+            // 全てのモニターを調べたかチェック
+            if (checkedMonitors[1] && checkedMonitors[2] && checkedMonitors[3] && checkedMonitors[4]) {
+                setTimeout(() => {
+                    log.innerHTML = "<span style='color:#00ff66;'>【システム解放】</span><br>全てのモニターのログを確認した。背後の壁が重々しい音を立ててスライドし、さらに深淵へと続く新しいハッチが現れた。";
+                    document.getElementById("escapeBtn").style.display = "inline-block";
+                }, 1000);
+            }
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
