@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>蓄音機の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #ff33cc; /* 妖しい音楽をイメージした紫ピンク */
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 51, 204, 0.4);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .room-container {
+            background-color: #0b050a;
+            border: 2px solid #660044;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(255, 51, 204, 0.05);
+        }
+
+        .story-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #aaaaaa;
+        }
+
+        .audio-btn {
+            background-color: #220011;
+            color: #ff33cc;
+            border: 1px solid #880044;
+            padding: 12px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        .audio-btn:hover {
+            background-color: #ff33cc;
+            color: #000000;
+            box-shadow: 0 0 15px #ff33cc;
+        }
+
+        input {
+            background-color: #000000;
+            border: 1px solid #880044;
+            color: #ff33cc;
+            font-size: 24px;
+            width: 100px;
+            text-align: center;
+            padding: 8px;
+            outline: none;
+        }
+
+        .submit-btn {
+            display: block;
+            margin: 25px auto 0 auto;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 10px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：蓄音機の部屋</h1>
+    <div class="hint">――呪われた旋律。闇に響く不協和音を数えよ――</div>
+
+    <div class="room-container">
+        <div class="story-text">
+            部屋の真ん中に、埃を被った巨大な蓄音機が置かれている。<br>
+            針を落とすと、壊れた機械のような不気味な歌が流れ出した……。<br>
+            鉄扉の横の石碑には「『ラ』の音を刻め」と血文字で書かれている。
+        </div>
+
+        <button class="audio-btn" onclick="playGramophone()">蓄音機を再生する</button>
+
+        <div>
+            <p style="font-size:14px; color:#666;">ハミングの中で「ラ」が鳴った回数は？</p>
+            <input type="text" id="soundAnswer" placeholder="0" onkeydown="if(event.key==='Enter') checkSound()">
+            <button class="submit-btn" onclick="checkSound()">扉を押す</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        function playGramophone() {
+            alert("ザザッ……ジジ……\n「ル〜♪ ラ〜♪ ミ〜♪ ラ〜♪ シ〜♪ ラ〜♪ ソ〜♪ ラ〜♪ ファ〜♪ ラ〜♪」\n……ブツッ。");
+        }
+
+        function checkSound() {
+            const ans = document.getElementById("soundAnswer").value.trim();
+            if (ans === "5") {
+                alert("カチリ。扉の奥からさらなる深淵の音が響く……。");
+                // 💡 設計図通り、次の「10分の4の確率部屋」へ直行させます！
+                window.location.href = "button-room4.html";
+            } else {
+                alert("キーーーーンッ！！ 鼓膜を突き刺す大音量のノイズが響き渡った！");
+                window.location.href = "dark-hazure2.html";
+            }
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
