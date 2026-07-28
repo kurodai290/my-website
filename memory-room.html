@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>記憶の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #00ffcc;
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .room-container {
+            background-color: #051010;
+            border: 2px solid #006655;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.05);
+        }
+
+        .story-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #aaaaaa;
+        }
+
+        input {
+            background-color: #000000;
+            border: 1px solid #006655;
+            color: #00ffcc;
+            font-size: 24px;
+            width: 120px;
+            text-align: center;
+            padding: 8px;
+            outline: none;
+        }
+
+        .submit-btn {
+            display: block;
+            margin: 25px auto 0 auto;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 10px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：記憶の剥奪</h1>
+    <div class="hint">――歩んできた軌跡。背負った運命の総量をここに刻め――</div>
+
+    <div class="room-container">
+        <div class="story-text">
+            冷たい静寂の中、壁の石碑が青白く発光した……。<br>
+            「第1エリアから第5エリアまでの『運命の分子（確率の数字）』をすべて合算せよ」<br>
+            正解を導かねば、今までの記憶ごと闇に葬られるだろう。
+        </div>
+
+        <div>
+            <!-- 💡 1+2+3+4+5 = 15 が正解になります -->
+            <input type="text" id="memoryInput" placeholder="0" onkeydown="if(event.key==='Enter') checkMemory()">
+            <button class="submit-btn" onclick="checkMemory()">記憶を証明する</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        function checkMemory() {
+            const ans = document.getElementById("memoryInput").value.trim();
+            if (ans === "15") {
+                alert("ゴゴゴ……！ 石碑が緑色に変わり、次のエリアへと続く重い鉄扉が上がった！");
+                // 💡 クリア後は次の「10分の7の部屋」へ合流します！
+                window.location.href = "button-room7.html";
+            } else {
+                alert("ピピッ……！ 不正解。脳を直接揺さぶるノイズが響き、目の前が真っ暗になった。");
+                window.location.href = "dark-hazure2.html";
+            }
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
