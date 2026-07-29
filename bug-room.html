@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ERROR: CODE_777</title>
+    <style>
+        html, body {
+            background-color: #0000aa; /* 💻 Windowsのブルースクリーン風の青 */
+            color: #ffffff;
+            font-family: monospace; /* バグ感を出すため等幅フォント */
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+            position: relative;
+        }
+
+        /* 👾 画面全体をビリビリ揺らすバグノイズ（グリッチ）演出 */
+        body {
+            animation: screenShake 0.1s infinite alternate;
+        }
+
+        .error-container {
+            background-color: #0000aa;
+            border: 3px double #ffffff;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        h1 {
+            color: #ff3333; /* 警告の赤 */
+            font-size: 22px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            background: #ffffff;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .code-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ffffff;
+            margin-bottom: 25px;
+            word-break: break-all;
+        }
+
+        /* バグのパッチ（答え）を入力するエリア */
+        input {
+            background-color: #000000;
+            border: 1px solid #ffffff;
+            color: #00ff00; /* サイバーな緑文字 */
+            font-size: 20px;
+            font-family: monospace;
+            width: 150px;
+            text-align: center;
+            padding: 8px;
+            outline: none;
+        }
+
+        .submit-btn {
+            display: block;
+            margin: 25px auto 0 auto;
+            background-color: #ffffff;
+            color: #0000aa;
+            border: none;
+            padding: 10px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        .submit-btn:hover {
+            background-color: #ff3333;
+            color: #ffffff;
+        }
+
+        /* ⚡ 画面の揺れアニメーション */
+        @keyframes screenShake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            100% { transform: translate(-1px, -1px) rotate(0.1deg); }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="error-container">
+        <h1>🚨 CRITICAL_SYSTEM_ERROR 🚨</h1>
+        
+        <!-- 壊れたHTMLコードのような不気味なテキスト -->
+        <div class="code-text">
+            A fatal exception 0x07444444 has occurred.<br>
+            &lt;div class="world"&gt; is collapsing...<br>
+            &lt;script&gt; system.destroy(); &lt;/script&gt;<br><br>
+            [システムメッセージ]：<br>
+            世界のコードが崩壊を始めた。修復コードを入力せよ。<br>
+            （ヒント：この部屋は10分のいくつか）
+        </div>
+
+        <div style="text-align: center;">
+            <!-- 💡 正解は半角数字の「7」です -->
+            <input type="text" id="bugInput" placeholder="0" onkeydown="if(event.key==='Enter') fixBug()">
+            <button class="submit-btn" onclick="fixBug()">PATCH</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        function fixBug() {
+            const ans = document.getElementById("bugInput").value.trim();
+            
+            if (ans === "7") {
+                alert("SUCCESS: SYSTEM REBOOTING...\nバグの修復に成功した。エラー画面の奥から、次の扉が実体化する！");
+                // 🗺️ クリア後は次の「10分の8の確率部屋」へ直行します！
+                window.location.href = "button-room8.html";
+            } else {
+                alert("FATAL ERROR: OVERFLOW\n修復に失敗した。システムが完全にシャットダウンされる。");
+                window.location.href = "dark-hazure2.html";
+            }
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
