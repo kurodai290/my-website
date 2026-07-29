@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>最終解答の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #ffcc00; /* 最終解答にふさわしい神々しいゴールド */
+            font-size: 28px;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        /* 🔒 すべてのヒントを紡ぐ最終解答コンテナ */
+        .final-container {
+            background-color: #0a0a0a;
+            border: 2px solid #ffcc00;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.1);
+        }
+
+        .story-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 35px;
+            color: #dddddd;
+            letter-spacing: 1px;
+        }
+
+        /* 5桁の答えを入力するテキストボックス */
+        input {
+            background-color: #000000;
+            border: 1px solid #ffcc00;
+            color: #ffffff; 
+            font-size: 28px;
+            font-family: 'MS Mincho', 'serif';
+            width: 220px;
+            text-align: center;
+            padding: 10px;
+            outline: none;
+            letter-spacing: 5px;
+        }
+
+        input:focus {
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+        }
+
+        /* 最後の扉を開く決定ボタン */
+        .submit-btn {
+            display: block;
+            margin: 35px auto 0 auto;
+            background-color: #111111;
+            color: #ffcc00;
+            border: 1px solid #ffcc00;
+            padding: 12px 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'MS Mincho', 'serif';
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .submit-btn:hover {
+            background-color: #ffcc00;
+            color: #000000;
+            box-shadow: 0 0 20px #ffcc00;
+        }
+
+        .warn {
+            color: #ff3333;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>【最終試練：真実の紡ぎ】</h1>
+    <div class="hint">――集めし欠片は五つの光。因果の糸をここで結べ――</div>
+
+    <div class="final-container">
+        <div class="story-text">
+            目の前に、世界の核へと繋がる巨大な大扉がそびえ立っている。<br>
+            これまであなたが潜り抜けてきた、各エリアの『裏側の部屋』で<br>
+            目にしてきた【5桁の言葉】を、ここに順番に刻み込め……。
+        </div>
+
+        <div>
+            <!-- 最大5文字制限、Enterキーでも送信可能です -->
+            <input type="text" id="finalWordField" placeholder="?????" maxlength="5" onkeydown="if(event.key==='Enter') verifyFinalWord()">
+            <button class="submit-btn" onclick="verifyFinalWord()">世界を解放する</button>
+            <p class="warn">※間違えると即座に最悪のエラー（ゲームオーバー）を誘発します。</p>
+        </div>
+    </div>
+
+    <script {nonce}>
+        function verifyFinalWord() {
+            var inputVal = document.getElementById("finalWordField").value.trim();
+            
+            // 💡 【重要】ここにあなたが集めさせたい「5桁の正解の言葉」を設定してください
+            // カタカナ・ひらがな両方対応できるようにしています。現在は例として「クリアダ」です。
+            const correctAnswer = "クリアダ"; 
+
+            if (inputVal === correctAnswer || inputVal === "くりあだ") {
+                alert("ゴゴゴゴゴゴゴオオオオオオッ！！！！\nすべての封印が解除された！世界の真実が暴かれる！");
+                // 🗺️ 見事大正解！ついに最後の「コード公開ページ（code-release.html）」へ突入します！
+                window.location.href = "code-release.html";
+            } else {
+                alert("ブブブブーーーーーーッッッ！！！\n【エラー：世界の崩壊】言葉が違います。");
+                // 間違えたら容赦なくゲームオーバー（dark-hazure2.html）へ
+                window.location.href = "dark-hazure2.html";
+            }
+        }
+
+        // デベロッパーツール対策
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
