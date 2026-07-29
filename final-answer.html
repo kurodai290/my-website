@@ -15,7 +15,7 @@
         }
 
         h1 {
-            color: #ffcc00; /* 最終解答にふさわしい神々しいゴールド */
+            color: #ffcc00; 
             font-size: 28px;
             letter-spacing: 8px;
             margin-bottom: 20px;
@@ -28,7 +28,6 @@
             margin-bottom: 40px;
         }
 
-        /* 🔒 すべてのヒントを紡ぐ最終解答コンテナ */
         .final-container {
             background-color: #0a0a0a;
             border: 2px solid #ffcc00;
@@ -48,7 +47,6 @@
             letter-spacing: 1px;
         }
 
-        /* 5桁の答えを入力するテキストボックス */
         input {
             background-color: #000000;
             border: 1px solid #ffcc00;
@@ -66,7 +64,6 @@
             box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
         }
 
-        /* 最後の扉を開く決定ボタン */
         .submit-btn {
             display: block;
             margin: 35px auto 0 auto;
@@ -96,8 +93,8 @@
 </head>
 <body oncontextmenu="return false;">
 
-    <h1>【最終試練：真実の紡ぎ】</h1>
-    <div class="hint">――集めし欠片は五つの光。因果の糸をここで結べ――</div>
+    <h1>【試練の紡ぎ：最終解答】</h1>
+    <div class="hint">――集めし欠片は五つの影。呪われた言葉をここに繋げ――</div>
 
     <div class="final-container">
         <div class="story-text">
@@ -107,7 +104,6 @@
         </div>
 
         <div>
-            <!-- 最大5文字制限、Enterキーでも送信可能です -->
             <input type="text" id="finalWordField" placeholder="?????" maxlength="5" onkeydown="if(event.key==='Enter') verifyFinalWord()">
             <button class="submit-btn" onclick="verifyFinalWord()">世界を解放する</button>
             <p class="warn">※間違えると即座に最悪のエラー（ゲームオーバー）を誘発します。</p>
@@ -118,22 +114,18 @@
         function verifyFinalWord() {
             var inputVal = document.getElementById("finalWordField").value.trim();
             
-            // 💡 【重要】ここにあなたが集めさせたい「5桁の正解の言葉」を設定してください
-            // カタカナ・ひらがな両方対応できるようにしています。現在は例として「クリアダ」です。
-            const correctAnswer = "クリアダ"; 
+            // 💡 正解の言葉を「シンスウシ」に変更しました
+            const correctAnswer = "シンスウシ"; 
 
-            if (inputVal === correctAnswer || inputVal === "くりあだ") {
+            if (inputVal === correctAnswer || inputVal === "しんすうし") {
                 alert("ゴゴゴゴゴゴゴオオオオオオッ！！！！\nすべての封印が解除された！世界の真実が暴かれる！");
-                // 🗺️ 見事大正解！ついに最後の「コード公開ページ（code-release.html）」へ突入します！
                 window.location.href = "code-release.html";
             } else {
                 alert("ブブブブーーーーーーッッッ！！！\n【エラー：世界の崩壊】言葉が違います。");
-                // 間違えたら容赦なくゲームオーバー（dark-hazure2.html）へ
                 window.location.href = "dark-hazure2.html";
             }
         }
 
-        // デベロッパーツール対策
         window.addEventListener('keydown', function (e) {
             if (e.key === 'F12') { e.preventDefault(); return false; }
             if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
