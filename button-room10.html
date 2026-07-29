@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>第十のボタンの間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .button-container {
+            background-color: #0a0a0a;
+            border: 2px solid #444444;
+            padding: 50px;
+            border-radius: 5px;
+            text-align: center;
+            min-width: 300px;
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.1);
+        }
+
+        .fate-btn {
+            background-color: #111111;
+            color: #ffcc00; 
+            border: 2px solid #ffcc00;
+            padding: 25px 50px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'MS Mincho', 'serif';
+            letter-spacing: 5px;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+        }
+        .fate-btn:hover {
+            background-color: #ffcc00;
+            color: #000000;
+            box-shadow: 0 0 35px #ffcc00;
+        }
+        .fate-btn:disabled {
+            background-color: #000000;
+            color: #333333;
+            border-color: #222222;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .result-box {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #aaaaaa;
+            min-height: 40px;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>10分の10の試練：button-room10</h1>
+    <div class="hint">――運命の終着駅。10分の10、絶対の解放を起動せよ――</div>
+
+    <div class="button-container">
+        <button id="gambleBtn10" class="fate-btn" onclick="tryLuck10()">最終システム起動</button>
+        <div id="statusResult10" class="result-box">これまでの過酷な旅路を、この一押しで完結させよ。</div>
+    </div>
+
+    <script {nonce}>
+        function tryLuck10() {
+            const btn = document.getElementById('gambleBtn10');
+            const status = document.getElementById('statusResult10');
+            
+            btn.disabled = true; 
+            status.style.color = "#ffcc00";
+            status.innerHTML = "運命の完全固定に成功…… すべての因果を収束させています……";
+
+            setTimeout(() => {
+                // 💡 100%絶対にアタリになります
+                status.style.color = "#00ffcc";
+                status.innerHTML = "【完全認証：10/10】 この世界の扉がすべて解放されました。";
+
+                setTimeout(() => {
+                    alert("カチャァァン！！！\n世界の崩壊が止まった。集めたすべての欠片を紡ぐ【最終解答の間】の封印が解かれる！");
+                    // 🗺️ 本当の最終解答部屋へ進みます
+                    window.location.href = "final-answer.html";
+                }, 1000);
+            }, 1500);
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
