@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>日記の間</title>
+    <style>
+        html, body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'MS Mincho', 'serif';
+            margin: 0; padding: 0; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            user-select: none; overflow: hidden;
+        }
+
+        h1 {
+            color: #cccccc; 
+            font-size: 26px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .hint {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .room-container {
+            background-color: #050505;
+            border: 2px solid #333333;
+            padding: 35px;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.02);
+        }
+
+        /* 📜 日記のテキストエリア */
+        .diary-box {
+            text-align: left;
+            background-color: #000000;
+            border: 1px dashed #555555;
+            padding: 20px;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #dddddd;
+            margin-bottom: 30px;
+        }
+
+        /* 答えを入力するテキストボックス */
+        input {
+            background-color: #000000;
+            border: 1px solid #555555;
+            color: #ffffff;
+            font-size: 24px;
+            font-family: 'MS Mincho', 'serif';
+            width: 180px;
+            text-align: center;
+            padding: 8px;
+            outline: none;
+            letter-spacing: 2px;
+        }
+
+        .submit-btn {
+            display: block;
+            margin: 25px auto 0 auto;
+            background-color: #111111;
+            color: #ffffff;
+            border: 1px solid #444444;
+            padding: 10px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'MS Mincho', 'serif';
+        }
+        .submit-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <h1>試練の間：日記の部屋</h1>
+    <div class="hint">――遺された手記。過去の記憶から、真実の名前を導け――</div>
+
+    <div class="room-container">
+        <!-- 怪異の正体に関する不気味なメッセージ -->
+        <div class="diary-box">
+            古びた机の上に、一冊の日記が開かれている……。<br><br>
+            『……あの赤い顔の化け物が、また廊下を徘徊している。<br>
+            誰も奴の本当の名前を呼ぼうとしない。<br>
+            【オ】わりなき夜の帳が降りる頃、<br>
+            【バ】ラバラになった世界の欠片を集め、<br>
+            【ケ】ッチャクをつける時が来るだろう……。』<br><br>
+            日記の最後のページには、大きな鍵穴がポツンと刻まれている。
+        </div>
+
+        <div>
+            <!-- Enterキーでも送信できるようにしています -->
+            <input type="text" id="diaryInput" placeholder="???" onkeydown="if(event.key==='Enter') checkDiary()">
+            <button class="submit-btn" onclick="checkDiary()">頁をめくる</button>
+        </div>
+    </div>
+
+    <script {nonce}>
+        function checkDiary() {
+            const ans = document.getElementById("diaryInput").value.trim();
+            
+            // 💡 日記の頭文字を繋げた「オバケ」（またはひらがな）が正解です
+            if (ans === "オバケ" || ans === "おばけ") {
+                alert("ガシャリ！ 日記の鍵穴が回り、背後の本棚がスライドして新しい通路が現れた！");
+                // 🗺️ 次のステージ「10分の9の確率部屋」へ直行します
+                window.location.href = "button-room9.html";
+            } else {
+                alert("ピピッ……！ 不正解。日記から黒い霧が噴き出し、あなたの意識を奪った。");
+                window.location.href = "dark-hazure2.html";
+            }
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+        });
+    </script>
+
+</body>
+</html>
