@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>試練の間：予告</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", "MS 明朝", "MS Mincho", serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            letter-spacing: 0.1em;
+            line-height: 2; /* 行間を広げて読みやすく */
+        }
+        
+        /* 全体枠（画像の白い点線を再現） */
+        .container {
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 80%;
+        }
+
+        /* 一番上の見出し（黄色） */
+        .title {
+            color: #ffcc00;
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.3em;
+        }
+
+        /* 通常の文章（薄い灰色） */
+        .text-normal {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* 最も重要な警告文（赤・大きめ） */
+        .text-alert {
+            color: #ff0000;
+            font-size: 1.2rem;
+            font-weight: normal;
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.15em;
+        }
+
+        /* 下部の補足文章（さらに薄い灰色・小さめ） */
+        .text-sub {
+            color: #666666;
+            font-size: 0.85rem;
+            margin-bottom: 3.5rem;
+        }
+
+        /* 探索へ戻るボタン */
+        .btn {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 8px 30px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 黄色見出し -->
+        <div class="title">次 篇 の 間 ： 終わりの始まり</div>
+
+        <!-- 通常文 -->
+        <div class="text-normal">
+            無事にクリアへと至った旅人よ。<br>
+            しかし、君が目撃した「真実」はほんの一部に過ぎない。
+        </div>
+
+        <!-- 赤色強調文（長くなる可能性の示唆） -->
+        <div class="text-alert">
+            「この先、さらなる深淵が待ち受けている……<br>
+            旅路はさらに長く、果てしなく伸びるだろう」
+        </div>
+
+        <!-- 補足文 -->
+        <div class="text-sub">
+            覚悟を決め、新たな鍵を手にするがよい。<br>
+            真の終焉を迎えるその時まで。
+        </div>
+
+        <!-- 下部ボタン（リンク先は状況に応じて index.html などに変えてください） -->
+        <a href="index.html" class="btn">ゲームに戻る</a>
+    </div>
+
+</body>
+</html>
