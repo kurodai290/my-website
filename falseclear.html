@@ -19,15 +19,53 @@
         }
         h1 {
             font-size: 3.5rem;
+            margin-top: 0;
             margin-bottom: 1.5rem;
             font-weight: normal;
-            letter-spacing: 0.5em; /* 文字の間隔を広くして画像の雰囲気に */
-            text-indent: 0.5em; /* 中央揃えのズレを調整 */
+            letter-spacing: 0.5em;
+            text-indent: 0.5em;
         }
         p {
             font-size: 1.1rem;
             margin-top: 0;
-            color: #ffffff; /* サブタイトルは画像に合わせて白にしています */
+            margin-bottom: 0;
+            color: #ffffff;
+        }
+        /* ボタンを囲むコンテナ */
+        .button-container {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 2.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        /* 5秒後に適用されるクラス */
+        .button-container.show {
+            display: flex;
+        }
+        .button-container.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* ボタンのデザイン */
+        .btn {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            padding: 10px 40px;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            min-width: 150px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn:hover {
+            background-color: #ffffff;
+            color: #000000;
         }
     </style>
 </head>
@@ -35,6 +73,26 @@
 
     <h1>くりあ</h1>
     <p>こんぐらっちゅれーしょん</p>
+    
+    <!-- 5秒後にサブタイトルの下に表示されるボタン -->
+    <div id="btn-group" class="button-container">
+        <!-- 💡 href="next.html" で、次のファイルへ飛ぶ設定になっています -->
+        <a href="next.html" class="btn">次のステージへ</a>
+        <a href="index.html" class="btn">最初からやり直す</a>
+        <a href="title.html" class="btn">タイトルに戻る</a>
+    </div>
+
+    <script>
+        // 5秒（5000ミリ秒）後にボタンを表示
+        setTimeout(function() {
+            var btnGroup = document.getElementById('btn-group');
+            btnGroup.classList.add('show');
+            
+            setTimeout(function() {
+                btnGroup.classList.add('fade-in');
+            }, 10);
+        }, 5000);
+    </script>
 
 </body>
 </html>
