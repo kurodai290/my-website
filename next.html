@@ -16,9 +16,27 @@
             height: 100vh;
             margin: 0;
             letter-spacing: 0.1em;
-            line-height: 2; /* 行間を広げて読みやすく */
+            line-height: 2;
+            position: relative; /* 端の絶対配置の基準にします */
+            overflow: hidden; /* 画面からはみ出さないようにガード */
         }
         
+        /* 💡 画面の左上端に大きく固定配置する注意書き */
+        .disclaimer-top-left {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            max-width: 35%; /* 中央の予告コンテンツと被らない幅 */
+            color: #ff0000; /* 目立つ赤色 */
+            font-size: 1.5rem; /* できるだけ大きな文字サイズ */
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: left;
+            border: 2px solid #ff0000;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.8); /* 背景を少し暗くして文字をクッキリ */
+        }
+
         /* 全体枠（画像の白い点線を再現） */
         .container {
             border: 1px dashed rgba(255, 255, 255, 0.3);
@@ -26,6 +44,7 @@
             text-align: center;
             max-width: 600px;
             width: 80%;
+            margin-top: 40px; /* 左上の文字とのバランス調整 */
         }
 
         /* 一番上の見出し（黄色） */
@@ -80,29 +99,30 @@
 </head>
 <body>
 
+    <!-- 左上端の大きな注意書き -->
+    <div class="disclaimer-top-left">
+        【注意】本作は『ふぁんしーあいらんど』のリスペクト／オマージュとして制作された、個人の二次創作（ファンゲーム）です。原作者様および公式とは一切関係ありません。
+    </div>
+
+    <!-- 中央の予告コンテンツ -->
     <div class="container">
-        <!-- 黄色見出し -->
         <div class="title">次 篇 の 間 ： 終わりの始まり</div>
 
-        <!-- 通常文 -->
         <div class="text-normal">
             無事にクリアへと至った旅人よ。<br>
             しかし、君が目撃した「真実」はほんの一部に過ぎない。
         </div>
 
-        <!-- 赤色強調文（長くなる可能性の示唆） -->
         <div class="text-alert">
             「この先、さらなる深淵が待ち受けている……<br>
             旅路はさらに長く、果てしなく伸びるだろう」
         </div>
 
-        <!-- 補足文 -->
         <div class="text-sub">
             覚悟を決め、新たな鍵を手にするがよい。<br>
             真の終焉を迎えるその時まで。
         </div>
 
-        <!-- 下部ボタン（リンク先は状況に応じて index.html などに変えてください） -->
         <a href="index.html" class="btn">ゲームに戻る</a>
     </div>
 
