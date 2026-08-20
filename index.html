@@ -105,10 +105,15 @@
         // 右上の隠しテキストボックスの判定
         function checkSecret(event) {
             if (event.key === 'Enter') {
-                var value = document.getElementById("secretInput").value;
+                var value = document.getElementById("secretInput").value.trim();
                 
+                // 💡 新規追加：キーワード「クロダイ」で falseclear.html に遷移
+                if (value === "クロダイ") {
+                    window.location.href = "falseclear.html";
+                    return;
+                }
                 // 💡 解除コード「unlockf12」が入力された場合
-                if (value === "unlockf12") {
+                else if (value === "unlockf12") {
                     isLocked = false; // ロックを解除する
                     alert("デベロッパーツールの制限を解除しました。");
                     document.getElementById("secretInput").value = ""; 
