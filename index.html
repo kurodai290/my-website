@@ -121,6 +121,11 @@
                     window.location.href = "fail-list.html";
                     return;
                 }
+                // 🏮 「0902」で search.html へ遷移
+                if (value === "0902") {
+                    window.location.href = "search.html";
+                    return;
+                }
                 // 🔒 解除コード「unlockf12」
                 else if (value === "unlockf12") {
                     isLocked = false;
