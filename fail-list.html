@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ファイル名一覧</title>
+    <style>
+        /* 全体の背景と文字色（黒背景） */
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* 画面タイトル */
+        .title {
+            color: #555555;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        /* リストを包むコンテナ */
+        .list-container {
+            width: 100%;
+            max-width: 650px;
+            border: 1px solid #333333;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #050505;
+        }
+
+        /* リスト全体のスタイル消去 */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* 各ファイル名の行 */
+        li {
+            border-bottom: 1px solid #1a1a1a;
+            padding: 12px 8px;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        /* ファイル名のリンク（白文字） */
+        a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-family: monospace; /* ファイル名が見やすい等幅フォント */
+            display: block;
+            transition: color 0.2s, padding-left 0.2s;
+        }
+
+        /* マウスを乗せたときの反応 */
+        a:hover {
+            color: #ff0000; /* 赤く光る */
+            padding-left: 5px; /* 少し右にずれる */
+        }
+
+        /* 戻るボタン用のリンク */
+        .back-link {
+            margin-top: 30px;
+            color: #555555;
+            font-size: 14px;
+            text-decoration: underline;
+        }
+        .back-link:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">ファイル名一覧</div>
+
+    <div class="list-container">
+        <ul>
+            <li><a href="answer-room.html">answer-room.html</a></li>
+            <li><a href="answer-room2.html">answer-room2.html</a></li>
+            <li><a href="battle-room.html">battle-room.html</a></li>
+            <li><a href="bug-room.html">bug-room.html</a></li>
+            <li><a href="button-room.html">button-room.html</a></li>
+            <li><a href="button-room10.html">button-room10.html</a></li>
+            <li><a href="button-room3.html">button-room3.html</a></li>
+            <li><a href="button-room4.html">button-room4.html</a></li>
+            <li><a href="button-room5.html">button-room5.html</a></li>
+            <li><a href="button-room6.html">button-room6.html</a></li>
+            <li><a href="button-room7.html">button-room7.html</a></li>
+            <li><a href="button-room8.html">button-room8.html</a></li>
+            <li><a href="button-room9.html">button-room9.html</a></li>
+            <li><a href="clock-room.html">clock-room.html</a></li>
+            <li><a href="code-release.html">code-release.html</a></li>
+            <li><a href="code-room.html">code-room.html</a></li>
+            <li><a href="code-room2.html">code-room2.html</a></li>
+            <li><a href="color-room.html">color-room.html</a></li>
+            <li><a href="control-room.html">control-room.html</a></li>
+            <li><a href="dark-hazure.html">dark-hazure.html</a></li>
+            <li><a href="dark-hazure2.html">dark-hazure2.html</a></li>
+            <li><a href="diary-room.html">diary-room.html</a></li>
+            <li><a href="falseclear.html">falseclear.html</a></li>
+            <li><a href="final-answer.html">final-answer.html</a></li>
+            <li><a href="final-puzzle.html">final-puzzle.html</a></li>
+            <li><a href="gravity-room.html">gravity-room.html</a></li>
+            <li><a href="hint-room.html">hint-room.html</a></li>
+            <li><a href="hint2.html">hint2.html</a></li>
+            <li><a href="hint3.html">hint3.html</a></li>
+            <li><a href="hint4.html">hint4.html</a></li>
+            <li><a href="hint5.html">hint5.html</a></li>
+            <li><a href="hint6.html">hint6.html</a></li>
+            <li><a href="horror-video.mp4">horror-video.mp4</a></li>
+            <li><a href="hub-room.html">hub-room.html</a></li>
+            <li><a href="index.html">index.html</a></li>
+            <li><a href="item-room.html">item-room.html</a></li>
+            <li><a href="left-hazure.html">left-hazure.html</a></li>
+            <li><a href="left-room.html">left-room.html</a></li>
+            <li><a href="liar-room.html">liar-room.html</a></li>
+            <li><a href="maze-room.html">maze-room.html</a></li>
+            <li><a href="maze-room2.html">maze-room2.html</a></li>
+            <li><a href="memory-room.html">memory-room.html</a></li>
+            <li><a href="mirror-room.html">mirror-room.html</a></li>
+            <li><a href="next.html">next.html</a></li>
+            <li><a href="obake.png">obake.png</a></li>
+            <li><a href="obake2.png">obake2.png</a></li>
+            <li><a href="object-hazure.html">object-hazure.html</a></li>
+            <li><a href="object-room.html">object-room.html</a></li>
+            <li><a href="omikuji-room.html">omikuji-room.html</a></li>
+            <li><a href="right-hazure.html">right-hazure.html</a></li>
+            <li><a href="right-room.html">right-room.html</a></li>
+            <li><a href="room1.html">room1.html</a></li>
+            <li><a href="shadow-room.html">shadow-room.html</a></li>
+            <li><a href="sound-room.html">sound-room.html</a></li>
+            <li><a href="time-attack.html">time-attack.html</a></li>
+            <li><a href="upside-down.html">upside-down.html</a></li>
+            <li><a href="watch-room.html">watch-room.html</a></li>
+            <li><a href="water-corridor.html">water-corridor.html</a></li>
+        </ul>
+    </div>
+
+    <!-- 必要であればテキストボックスの部屋に戻るリンク（ファイル名は適宜変更してください） -->
+    <a href="textbox-room.html" class="back-link">戻る</a>
+
+</body>
+</html>
