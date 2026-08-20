@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ファイル入力画面</title>
+    <style>
+        /* 全体の背景と文字色（黒背景） */
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* 上部のヘッダーコンテナ */
+        .header-container {
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            margin-bottom: 150px;
+        }
+
+        /* 左上のグレー文字（ファイル名一覧） */
+        .label-list {
+            color: #555555;
+            font-size: 16px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* 左上のグレー文字（ボタン） */
+        .label-button {
+            color: #555555;
+            font-size: 24px;
+            position: absolute;
+            left: 0;
+            top: 40px;
+        }
+
+        /* 中央上部の赤文字（メインメッセージ） */
+        .main-title {
+            color: #ff0000;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* 中央の入力エリア用コンテナ */
+        .input-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 白枠のテキストボックス */
+        .text-box {
+            width: 650px;
+            height: 80px;
+            background-color: transparent;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            font-size: 20px;
+            padding: 10px;
+            box-sizing: border-box;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="label-list">ファイル名一覧</div>
+        <div class="label-button">ボタン</div>
+        <div class="main-title">行きたいファイルを入れてください</div>
+    </div>
+
+    <div class="input-container">
+        <!-- ページ読み込み時にすぐ入力できるよう autofocus をつけています -->
+        <input type="text" class="text-box" id="fileInput" autofocus placeholder="">
+    </div>
+
+    <script>
+        // 存在するファイル名の一覧リスト
+        const fileList = [
+            "answer-room.html", "answer-room2.html", "battle-room.html", "bug-room.html", 
+            "button-room.html", "button-room10.html", "button-room3.html", "button-room4.html", 
+            "button-room5.html", "button-room6.html", "button-room7.html", "button-room8.html", 
+            "button-room9.html", "clock-room.html", "code-release.html", "code-room.html", 
+            "code-room2.html", "color-room.html", "control-room.html", "dark-hazure.html", 
+            "dark-hazure2.html", "diary-room.html", "falseclear.html", "final-answer.html", 
+            "final-puzzle.html", "gravity-room.html", "hint-room.html", "hint2.html", 
+            "hint3.html", "hint4.html", "hint5.html", "hint6.html", "horror-video.mp4", 
+            "hub-room.html", "index.html", "item-room.html", "left-hazure.html", 
+            "left-room.html", "liar-room.html", "maze-room.html", "maze-room2.html", 
+            "memory-room.html", "mirror-room.html", "next.html", "obake.png", 
+            "obake2.png", "object-hazure.html", "object-room.html", "omikuji-room.html", 
+            "right-hazure.html", "right-room.html", "room1.html", "shadow-room.html", 
+            "sound-room.html", "time-attack.html", "upside-down.html", "watch-room.html", 
+            "water-corridor.html"
+        ];
+
+        const fileInput = document.getElementById('fileInput');
+
+        // キーボードが押されたときの処理
+        fileInput.addEventListener('keydown', function(event) {
+            // Enterキーが押された場合
+            if (event.key === 'Enter') {
+                const inputValue = fileInput.value.trim();
+
+                // 入力されたファイル名がリストに存在するかチェック
+                if (fileList.includes(inputValue)) {
+                    // 同じフォルダ内の該当ファイルへ遷移
+                    window.location.href = inputValue;
+                } else {
+                    // 存在しない場合は入力欄を空にする
+                    fileInput.value = '';
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
