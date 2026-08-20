@@ -15,28 +15,15 @@
             user-select: none;
         }
 
-        /* 一番右上の隠しテキストボックス */
-        .hidden-box {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-
-        .hidden-box input {
-            background-color: #000000;
-            border: 1px solid #000000;
-            color: #ffffff;
-            padding: 5px;
-            font-size: 14px;
-            width: 120px;
-            outline: none;
-            text-align: center;
-            cursor: default;
-        }
-
-        .hidden-box input:focus {
-            border: 1px solid #ff0000;
-            cursor: text;
+        /* 👁️ 完全にステルス化した隠し入力欄（画面上には見えません） */
+        #secretInput {
+            position: fixed;
+            top: -100px;
+            left: -100px;
+            width: 0px;
+            height: 0px;
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* メイン画面の見た目 */
@@ -83,13 +70,10 @@
         }
     </style>
 </head>
-<!-- 💡 bodyの右クリック禁止を、プログラムでON/OFFできるようにIDをつけました -->
 <body id="mainBody" oncontextmenu="return isLocked;">
 
-    <!-- 右上の隠しテキストボックス -->
-    <div class="hidden-box">
-        <input type="text" id="secretInput" placeholder="" onkeydown="checkSecret(event)">
-    </div>
+    <!-- 完全に見えない隠し入力欄 -->
+    <input type="text" id="secretInput" autocomplete="off">
 
     <!-- メイン画面 -->
     <div>
@@ -102,40 +86,53 @@
         // 🔒 初期状態はロックON（true）
         var isLocked = true;
 
-        // 右上の隠しテキストボックスの判定
-        function checkSecret(event) {
-            if (event.key === 'Enter') {
-                var value = document.getElementById("secretInput").value.trim();
-                
-                // 💡 新規追加：キーワード「クロダイ」で falseclear.html に遷移
-                if (value === "クロダイ") {
-                    window.location.href = "falseclear.html";
-                    return;
-                }
-                // 💡 解除コード「unlockf12」が入力された場合
-                else if (value === "unlockf12") {
-                    isLocked = false; // ロックを解除する
-                    alert("デベロッパーツールの制限を解除しました。");
-                    document.getElementById("secretInput").value = ""; 
-                } 
-                // 前回の「おばけ」ルートも残してあります
-                else if (value === "おばけ") {
-                    alert("秘密の裏口を見つけたね...");
-                    window.location.href ="code-room.html";
-                } else {
-                    alert("ちがう。");
-                    document.getElementById("secretInput").value = "";
-                }
-            }
-        }
+        // 👆 画面のどこでもクリックしたら、隠し入力欄にフォーカスを当てる
+        window.addEventListener('click', function() {
+            document.getElementById("secretInput").focus();
+        });
 
-        // デベロッパーツール対策のキーボード監視
-        window.addEventListener('keydown', function (e) {
-            // 🔒 ロックがON（true）の時だけ、F12やショートカットを禁止する
+        // ⌨️ キーボードが押された時も、自動的に隠し入力欄にフォーカスを誘導
+        window.addEventListener('keydown', function(e) {
+            if (!e.ctrlKey && !e.metaKey && e.key !== 'F12') {
+                document.getElementById("secretInput").focus();
+            }
+
+            // デベロッパーツール対策のキーボード監視
             if (isLocked) {
                 if (e.key === 'F12') { e.preventDefault(); return false; }
                 if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
                 if (e.ctrlKey && e.key === 'u') { e.preventDefault(); return false; }
+            }
+        });
+
+        // 🛠️ 隠し入力欄でのEnterキー判定
+        document.getElementById("secretInput").addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                // 入力された文字を小文字に統一し、前後のスペースを削除
+                var value = this.value.trim().toLowerCase();
+
+                // 🏮 「kurodai」で falseclear.html へ遷移
+                if (value === "kurodai") {
+                    window.location.href = "falseclear.html";
+                    return;
+                }
+                // 🔒 解除コード「unlockf12」
+                else if (value === "unlockf12") {
+                    isLocked = false;
+                    alert("デベロッパーツールの制限を解除しました。");
+                } 
+                // 👻 「おばけ」
+                else if (value === "おばけ") {
+                    alert("秘密の裏口を見つけたね...");
+                    window.location.href = "code-room.html";
+                    return;
+                } else {
+                    alert("ちがう。");
+                }
+
+                // 入力をクリアしてリセット
+                this.value = "";
+                this.blur();
             }
         });
     </script>
