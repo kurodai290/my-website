@@ -1,287 +1,295 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>島の外側</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>ふぁんしーなしま - 第2部</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
 
-    body {
-        margin: 0;
-        min-height: 100vh;
+* {
+    box-sizing: border-box;
+}
 
-        background: #080808;
-        color: #eeeeee;
+body {
 
-        font-family:
-            "ヒラギノ明朝 ProN",
-            "Hiragino Mincho ProN",
-            "Yu Mincho",
-            "MS Mincho",
-            serif;
+    margin: 0;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    min-height: 100vh;
 
-        overflow: hidden;
-    }
+    background: #f7f2ff;
 
-    .container {
-        width: min(800px, 90%);
-        text-align: center;
-    }
+    color: #333;
 
-    #text {
-        font-size: 1.2rem;
-        line-height: 2.5;
-        min-height: 160px;
+    font-family:
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
 
-        transition: opacity 1.5s ease;
-    }
+    display: flex;
 
-    .fade {
-        opacity: 0;
-    }
+    justify-content: center;
 
-    #question {
-        font-size: 1.8rem;
-        line-height: 2;
+    align-items: center;
 
-        margin-top: 30px;
+    overflow-x: hidden;
 
-        opacity: 0;
+}
 
-        transition: opacity 2s ease;
-    }
+.container {
 
-    #question.show {
-        opacity: 1;
-    }
+    width: min(800px, 90%);
 
-    #button-area {
-        margin-top: 45px;
+    text-align: center;
 
-        opacity: 0;
+}
 
-        transition: opacity 2s ease;
-    }
+#message {
 
-    #button-area.show {
-        opacity: 1;
-    }
+    min-height: 180px;
 
-    button {
-        background: transparent;
+    font-size: 1.15rem;
 
-        color: #ffffff;
+    line-height: 2.2;
 
-        border: 1px solid #ffffff;
+}
 
-        padding: 12px 45px;
+.fade {
+
+    opacity: 0;
+
+    transition: opacity 1s;
+
+}
+
+#title {
+
+    font-size: 2.2rem;
+
+    font-weight: bold;
+
+    opacity: 0;
+
+    transition: opacity 2s;
+
+}
+
+#title.show {
+
+    opacity: 1;
+
+}
+
+#button-area {
+
+    margin-top: 40px;
+
+    opacity: 0;
+
+    transition: opacity 2s;
+
+}
+
+#button-area.show {
+
+    opacity: 1;
+
+}
+
+button {
+
+    padding: 13px 45px;
+
+    border: 2px solid #333;
+
+    background: white;
+
+    color: #333;
+
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+
+}
+
+button:hover {
+
+    background: #333;
+
+    color: white;
+
+}
+
+
+/* スマホ */
+
+@media (max-width: 600px) {
+
+    #message {
 
         font-size: 1rem;
 
-        font-family: inherit;
-
-        cursor: pointer;
     }
 
-    button:hover {
-        background: #ffffff;
-        color: #000000;
+    #title {
+
+        font-size: 1.8rem;
+
     }
 
-    #warning {
-        position: fixed;
-
-        bottom: 15px;
-        right: 20px;
-
-        font-size: 0.7rem;
-
-        color: #555555;
-
-        opacity: 0;
-
-        transition: opacity 3s ease;
-    }
-
-    #warning.show {
-        opacity: 1;
-    }
-
-    .glitch {
-        animation: glitch 0.12s infinite;
-    }
-
-    @keyframes glitch {
-
-        0% {
-            transform: translate(0, 0);
-        }
-
-        25% {
-            transform: translate(1px, -1px);
-        }
-
-        50% {
-            transform: translate(-1px, 1px);
-        }
-
-        75% {
-            transform: translate(1px, 1px);
-        }
-
-        100% {
-            transform: translate(0, 0);
-        }
-    }
+}
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-    <div id="text"></div>
 
-    <div id="question"></div>
+    <div id="message">
+
+        ……クリア？
+
+    </div>
+
+
+    <div id="title">
+
+        ふぁんしーなしま<br>
+
+        <span>第2部</span>
+
+    </div>
+
 
     <div id="button-area">
 
-        <button onclick="goNext()">
-            記録を見る
+        <button onclick="nextStage()">
+
+            先へ進む
+
         </button>
 
     </div>
 
-</div>
 
-
-<div id="warning">
-    connection : unstable
 </div>
 
 
 <script>
 
-    const text =
-        document.getElementById("text");
 
-    const question =
-        document.getElementById("question");
-
-    const buttonArea =
-        document.getElementById("button-area");
-
-    const warning =
-        document.getElementById("warning");
+const message =
+    document.getElementById("message");
 
 
-    /*
-     * 最初の文章
-     */
-
-    text.innerHTML =
-        "……ここは？";
+const title =
+    document.getElementById("title");
 
 
-    /*
-     * 少し待ってから文章を変更
-     */
+const buttonArea =
+    document.getElementById("button-area");
+
+
+/*
+========================================
+最初
+========================================
+*/
+
+setTimeout(function() {
+
+    message.classList.add("fade");
+
 
     setTimeout(function() {
 
-        text.classList.add("fade");
+        message.innerHTML =
+            "……と思った？";
 
-        setTimeout(function() {
+        message.classList.remove("fade");
 
-            text.innerHTML =
-                "さっきまで、島にいたはずだ。";
+    }, 1000);
 
-            text.classList.remove("fade");
-
-        }, 1500);
-
-    }, 2500);
+}, 2500);
 
 
-    /*
-     * さらに文章を変更
-     */
+/*
+========================================
+次
+========================================
+*/
+
+setTimeout(function() {
+
+    message.classList.add("fade");
+
 
     setTimeout(function() {
 
-        text.classList.add("fade");
+        message.innerHTML =
+            "まだまだ終わりじゃない。";
 
-        setTimeout(function() {
+        message.classList.remove("fade");
 
-            text.innerHTML =
-                "なのに、ここには何もない。";
+    }, 1000);
 
-            text.classList.remove("fade");
-
-        }, 1500);
-
-    }, 5500);
+}, 5000);
 
 
-    /*
-     * 「島」への疑問
-     */
+/*
+========================================
+第2部タイトル
+========================================
+*/
 
-    setTimeout(function() {
+setTimeout(function() {
 
-        question.innerHTML =
-            "あなたが今まで見ていた<br>" +
-            "「島」は、本当に島ですか？";
+    title.classList.add("show");
 
-        question.classList.add("show");
-
-    }, 8500);
+}, 7500);
 
 
-    /*
-     * 小さな違和感
-     */
+/*
+========================================
+ボタン
+========================================
+*/
 
-    setTimeout(function() {
+setTimeout(function() {
 
-        warning.classList.add("show");
+    buttonArea.classList.add("show");
 
-    }, 11000);
-
-
-    /*
-     * 次へ進むボタン
-     */
-
-    setTimeout(function() {
-
-        buttonArea.classList.add("show");
-
-    }, 13000);
+}, 9500);
 
 
-    /*
-     * 次のページへ
-     */
+/*
+========================================
+次へ
+========================================
+*/
 
-    function goNext() {
+function nextStage() {
 
-        window.location.href =
-            "record-room.html";
+    window.location.href =
+        "record-room.html";
 
-    }
+}
 
 </script>
 
+
 </body>
+
 </html>
