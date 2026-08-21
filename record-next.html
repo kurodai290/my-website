@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>記録 - その先</title>
+
+
+<style>
+
+/* ========================================
+   基本
+======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background: #111;
+
+    color: #ddd;
+
+    font-family:
+        "ヒラギノ明朝 ProN",
+        "Hiragino Mincho ProN",
+        "Yu Mincho",
+        "MS Mincho",
+        serif;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    overflow-x: hidden;
+
+    overflow-y: auto;
+
+    padding: 30px 15px;
+
+}
+
+
+/* ========================================
+   部屋
+======================================== */
+
+.room {
+
+    width: min(850px, 100%);
+
+    min-height: 650px;
+
+    background: #181818;
+
+    border: 1px solid #444;
+
+    padding: 45px;
+
+    position: relative;
+
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+h1 {
+
+    text-align: center;
+
+    font-size: 1.8rem;
+
+    font-weight: normal;
+
+    letter-spacing: 0.3em;
+
+    margin-top: 0;
+
+    margin-bottom: 40px;
+
+}
+
+
+/* ========================================
+   記録
+======================================== */
+
+.record {
+
+    border-top: 1px solid #555;
+
+    border-bottom: 1px solid #555;
+
+    padding: 25px;
+
+    line-height: 2.2;
+
+}
+
+
+.label {
+
+    color: #777;
+
+}
+
+
+.hidden {
+
+    color: #181818;
+
+    user-select: none;
+
+}
+
+
+/* ========================================
+   違和感
+======================================== */
+
+.strange {
+
+    margin-top: 35px;
+
+    text-align: center;
+
+    line-height: 2.2;
+
+    opacity: 0;
+
+    transition:
+        opacity 2s ease;
+
+}
+
+
+.strange.show {
+
+    opacity: 1;
+
+}
+
+
+/* ========================================
+   謎
+======================================== */
+
+.puzzle {
+
+    margin-top: 40px;
+
+    padding: 25px;
+
+    border: 1px solid #333;
+
+    text-align: center;
+
+    display: none;
+
+}
+
+
+.puzzle.show {
+
+    display: block;
+
+}
+
+
+.puzzle input {
+
+    width: 180px;
+
+    padding: 10px;
+
+    margin-top: 20px;
+
+    background: #222;
+
+    border: 1px solid #666;
+
+    color: white;
+
+    text-align: center;
+
+    font-size: 1rem;
+
+}
+
+
+button {
+
+    margin-top: 20px;
+
+    padding: 10px 35px;
+
+    background: transparent;
+
+    color: #ddd;
+
+    border: 1px solid #777;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+}
+
+
+button:hover {
+
+    background: #ddd;
+
+    color: #111;
+
+}
+
+
+/* ========================================
+   結果
+======================================== */
+
+#result {
+
+    margin-top: 25px;
+
+    min-height: 60px;
+
+    line-height: 2;
+
+}
+
+
+/* ========================================
+   次へ
+======================================== */
+
+#next {
+
+    display: none;
+
+    margin-top: 35px;
+
+    text-align: center;
+
+}
+
+
+#next a {
+
+    display: inline-block;
+
+    padding: 12px 45px;
+
+    color: #ddd;
+
+    border: 1px solid #777;
+
+    text-decoration: none;
+
+}
+
+
+#next a:hover {
+
+    background: #ddd;
+
+    color: #111;
+
+}
+
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 600px) {
+
+    body {
+
+        align-items: flex-start;
+
+    }
+
+
+    .room {
+
+        padding: 30px 20px;
+
+    }
+
+
+    h1 {
+
+        font-size: 1.5rem;
+
+    }
+
+
+    .record {
+
+        padding: 20px 10px;
+
+        font-size: 0.9rem;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="room">
+
+
+<h1>
+
+記録 ― その先
+
+</h1>
+
+
+<div class="record">
+
+    <div>
+
+        <span class="label">
+            記録者：
+        </span>
+
+        ―――――
+
+    </div>
+
+
+    <div>
+
+        <span class="label">
+            記録日時：
+        </span>
+
+        不明
+
+    </div>
+
+
+    <div>
+
+        <span class="label">
+            島への入島：
+        </span>
+
+        なし
+
+    </div>
+
+
+    <div>
+
+        <span class="label">
+            記録対象：
+        </span>
+
+        「あなた」
+
+    </div>
+
+
+    <br>
+
+
+    <div>
+
+        <span class="label">
+            備考：
+        </span>
+
+        ―――
+
+    </div>
+
+</div>
+
+
+<div
+    id="strange"
+    class="strange"
+>
+
+    この記録を書いた人物は、
+
+    <br>
+
+    <strong>
+        一度も島に入っていない。
+    </strong>
+
+    <br><br>
+
+    ……なのに。
+
+    <br><br>
+
+    この記録には、
+
+    <br>
+
+    <strong>
+        あなたしか知らないはずのこと
+    </strong>
+
+    が書かれている。
+
+</div>
+
+
+<div
+    id="puzzle"
+    class="puzzle"
+>
+
+    <div>
+
+        記録の最後に残されていた文字
+
+    </div>
+
+
+    <br>
+
+
+    <strong>
+
+        「最初に見たものを思い出せ」
+
+    </strong>
+
+
+    <br><br>
+
+
+    あなたがこの島で
+
+    <br>
+
+    <strong>
+        最初に見たもの
+    </strong>
+
+    は何だった？
+
+
+    <br>
+
+
+    <input
+        id="answer"
+        type="text"
+        autocomplete="off"
+    >
+
+
+    <br>
+
+
+    <button onclick="checkAnswer()">
+
+        確認
+
+    </button>
+
+
+    <div id="result"></div>
+
+</div>
+
+
+<div id="next">
+
+    <a href="record-room2.html">
+
+        次へ進む
+
+    </a>
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* ========================================
+   演出
+======================================== */
+
+
+setTimeout(function() {
+
+    document
+        .getElementById("strange")
+        .classList.add("show");
+
+}, 2500);
+
+
+setTimeout(function() {
+
+    document
+        .getElementById("puzzle")
+        .classList.add("show");
+
+}, 6000);
+
+
+
+/* ========================================
+   答え
+======================================== */
+
+/*
+   今回は「最初に見たもの」を
+   第1部とのつながりにする。
+
+   仮の答え：
+   「島」
+
+   後から実際の第1部の内容に合わせて
+   変更できます。
+*/
+
+
+function checkAnswer() {
+
+
+    const answer =
+        document
+            .getElementById("answer")
+            .value
+            .trim();
+
+
+    const result =
+        document.getElementById("result");
+
+
+    if (
+        answer === "島" ||
+        answer === "しま"
+    ) {
+
+
+        result.innerHTML =
+            "正解。<br><br>" +
+            "……やっぱり、覚えている。";
+
+
+        result.style.color =
+            "#ddd";
+
+
+        setTimeout(function() {
+
+            document
+                .getElementById("next")
+                .style.display = "block";
+
+        }, 2000);
+
+
+    } else {
+
+
+        result.innerHTML =
+            "……違う。<br>" +
+            "もっと最初を思い出して。";
+
+
+        result.style.color =
+            "#999";
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
