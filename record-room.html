@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>記録</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+
+        background: #f4f1e8;
+        color: #252525;
+
+        font-family:
+            "ヒラギノ明朝 ProN",
+            "Hiragino Mincho ProN",
+            "Yu Mincho",
+            "MS Mincho",
+            serif;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        overflow: hidden;
+    }
+
+    .room {
+        width: min(850px, 90%);
+        min-height: 600px;
+
+        background: #fffdf5;
+
+        border: 1px solid #aaa;
+
+        padding: 45px;
+
+        position: relative;
+
+        box-shadow:
+            0 0 25px rgba(0,0,0,0.12);
+    }
+
+    h1 {
+        text-align: center;
+
+        font-size: 2rem;
+
+        font-weight: normal;
+
+        margin-top: 0;
+        margin-bottom: 35px;
+
+        letter-spacing: 0.3em;
+    }
+
+    .record {
+        border-top: 1px solid #999;
+        border-bottom: 1px solid #999;
+
+        padding: 20px 10px;
+
+        line-height: 2.2;
+
+        font-size: 1rem;
+    }
+
+    .record span {
+        color: #777;
+    }
+
+    .warning {
+        margin-top: 35px;
+
+        text-align: center;
+
+        font-size: 1.2rem;
+
+        opacity: 0;
+
+        transition: opacity 2s;
+    }
+
+    .warning.show {
+        opacity: 1;
+    }
+
+    .question {
+        margin-top: 25px;
+
+        text-align: center;
+
+        color: #555;
+
+        opacity: 0;
+
+        transition: opacity 2s;
+    }
+
+    .question.show {
+        opacity: 1;
+    }
+
+    .button-area {
+        margin-top: 40px;
+
+        text-align: center;
+    }
+
+    button {
+        background: transparent;
+
+        border: 1px solid #333;
+
+        padding: 12px 45px;
+
+        font-size: 1rem;
+
+        font-family: inherit;
+
+        cursor: pointer;
+
+        display: none;
+    }
+
+    button:hover {
+        background: #333;
+        color: white;
+    }
+
+    #answer-area {
+        display: none;
+
+        text-align: center;
+
+        margin-top: 30px;
+    }
+
+    input {
+        width: 150px;
+
+        padding: 10px;
+
+        text-align: center;
+
+        font-size: 1.2rem;
+
+        letter-spacing: 0.3em;
+    }
+
+    #result {
+        margin-top: 20px;
+
+        min-height: 30px;
+    }
+
+
+    /* 隠しボタン */
+
+    #hidden-button {
+        position: absolute;
+
+        width: 18px;
+        height: 18px;
+
+        right: 28px;
+        bottom: 25px;
+
+        border: none;
+
+        background: transparent;
+
+        cursor: pointer;
+
+        opacity: 0.03;
+    }
+
+    #hidden-button:hover {
+        opacity: 0.15;
+    }
+
+
+    /* 数字 */
+
+    #secret-number {
+        display: none;
+
+        margin-top: 25px;
+
+        text-align: center;
+
+        font-size: 2rem;
+
+        letter-spacing: 0.5em;
+    }
+
+</style>
+</head>
+
+
+<body>
+
+<div class="room">
+
+    <h1>記録</h1>
+
+
+    <div class="record">
+
+        <div>
+            <span>記録番号：</span> 001
+        </div>
+
+        <div>
+            <span>場所：</span> ファンシーな島
+        </div>
+
+        <div>
+            <span>状態：</span> 正常
+        </div>
+
+        <div>
+            <span>訪問者：</span> なし
+        </div>
+
+        <div>
+            <span>最初の記録：</span> 不明
+        </div>
+
+        <div>
+            <span>最後の記録：</span> 不明
+        </div>
+
+    </div>
+
+
+    <div id="warning" class="warning">
+
+        ……おかしい。
+
+    </div>
+
+
+    <div id="question" class="question">
+
+        あなたは、ここに来たはずなのに。
+
+        <br>
+
+        <strong>なぜ記録に残っていない？</strong>
+
+    </div>
+
+
+    <div class="button-area">
+
+        <button
+            id="continue-button"
+            onclick="showAnswer()"
+        >
+            記録を調べる
+        </button>
+
+    </div>
+
+
+    <div id="answer-area">
+
+        <div>
+            記録番号を入力してください。
+        </div>
+
+        <br>
+
+        <input
+            id="answer"
+            type="text"
+            maxlength="4"
+            inputmode="numeric"
+        >
+
+        <br><br>
+
+        <button
+            style="display:inline-block;"
+            onclick="checkAnswer()"
+        >
+            確認
+        </button>
+
+        <div id="result"></div>
+
+    </div>
+
+
+    <div id="secret-number">
+        2047
+    </div>
+
+
+    <!-- 隠しボタン -->
+
+    <button
+        id="hidden-button"
+        onclick="revealSecret()"
+        aria-label="隠しボタン"
+    ></button>
+
+</div>
+
+
+<script>
+
+    /*
+     * 最初は普通の記録。
+     * 数秒後に違和感を出す。
+     */
+
+    setTimeout(function() {
+
+        document
+            .getElementById("warning")
+            .classList.add("show");
+
+    }, 2500);
+
+
+    setTimeout(function() {
+
+        document
+            .getElementById("question")
+            .classList.add("show");
+
+    }, 5000);
+
+
+    setTimeout(function() {
+
+        document
+            .getElementById("continue-button")
+            .style.display = "inline-block";
+
+    }, 7000);
+
+
+    /*
+     * 記録を調べる
+     */
+
+    function showAnswer() {
+
+        document
+            .getElementById("answer-area")
+            .style.display = "block";
+
+    }
+
+
+    /*
+     * 答えを確認
+     */
+
+    function checkAnswer() {
+
+        const answer =
+            document.getElementById("answer").value;
+
+        const result =
+            document.getElementById("result");
+
+
+        if (answer === "2047") {
+
+            result.innerHTML =
+                "正解。<br><br>……この記録は、誰が残した？";
+
+            result.style.color = "#222";
+
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "record-next.html";
+
+            }, 3000);
+
+        } else {
+
+            result.innerHTML =
+                "違う。記録番号ではないようだ。";
+
+            result.style.color = "#900";
+
+        }
+
+    }
+
+
+    /*
+     * 隠しボタン
+     */
+
+    function revealSecret() {
+
+        document
+            .getElementById("secret-number")
+            .style.display = "block";
+
+    }
+
+</script>
+
+</body>
+</html>
