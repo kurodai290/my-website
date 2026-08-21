@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>島の外側</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+
+        background: #080808;
+        color: #eeeeee;
+
+        font-family:
+            "ヒラギノ明朝 ProN",
+            "Hiragino Mincho ProN",
+            "Yu Mincho",
+            "MS Mincho",
+            serif;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        overflow: hidden;
+    }
+
+    .container {
+        width: min(800px, 90%);
+        text-align: center;
+    }
+
+    #text {
+        font-size: 1.2rem;
+        line-height: 2.5;
+        min-height: 160px;
+
+        transition: opacity 1.5s ease;
+    }
+
+    .fade {
+        opacity: 0;
+    }
+
+    #question {
+        font-size: 1.8rem;
+        line-height: 2;
+
+        margin-top: 30px;
+
+        opacity: 0;
+
+        transition: opacity 2s ease;
+    }
+
+    #question.show {
+        opacity: 1;
+    }
+
+    #button-area {
+        margin-top: 45px;
+
+        opacity: 0;
+
+        transition: opacity 2s ease;
+    }
+
+    #button-area.show {
+        opacity: 1;
+    }
+
+    button {
+        background: transparent;
+
+        color: #ffffff;
+
+        border: 1px solid #ffffff;
+
+        padding: 12px 45px;
+
+        font-size: 1rem;
+
+        font-family: inherit;
+
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #ffffff;
+        color: #000000;
+    }
+
+    #warning {
+        position: fixed;
+
+        bottom: 15px;
+        right: 20px;
+
+        font-size: 0.7rem;
+
+        color: #555555;
+
+        opacity: 0;
+
+        transition: opacity 3s ease;
+    }
+
+    #warning.show {
+        opacity: 1;
+    }
+
+    .glitch {
+        animation: glitch 0.12s infinite;
+    }
+
+    @keyframes glitch {
+
+        0% {
+            transform: translate(0, 0);
+        }
+
+        25% {
+            transform: translate(1px, -1px);
+        }
+
+        50% {
+            transform: translate(-1px, 1px);
+        }
+
+        75% {
+            transform: translate(1px, 1px);
+        }
+
+        100% {
+            transform: translate(0, 0);
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div id="text"></div>
+
+    <div id="question"></div>
+
+    <div id="button-area">
+
+        <button onclick="goNext()">
+            記録を見る
+        </button>
+
+    </div>
+
+</div>
+
+
+<div id="warning">
+    connection : unstable
+</div>
+
+
+<script>
+
+    const text =
+        document.getElementById("text");
+
+    const question =
+        document.getElementById("question");
+
+    const buttonArea =
+        document.getElementById("button-area");
+
+    const warning =
+        document.getElementById("warning");
+
+
+    /*
+     * 最初の文章
+     */
+
+    text.innerHTML =
+        "……ここは？";
+
+
+    /*
+     * 少し待ってから文章を変更
+     */
+
+    setTimeout(function() {
+
+        text.classList.add("fade");
+
+        setTimeout(function() {
+
+            text.innerHTML =
+                "さっきまで、島にいたはずだ。";
+
+            text.classList.remove("fade");
+
+        }, 1500);
+
+    }, 2500);
+
+
+    /*
+     * さらに文章を変更
+     */
+
+    setTimeout(function() {
+
+        text.classList.add("fade");
+
+        setTimeout(function() {
+
+            text.innerHTML =
+                "なのに、ここには何もない。";
+
+            text.classList.remove("fade");
+
+        }, 1500);
+
+    }, 5500);
+
+
+    /*
+     * 「島」への疑問
+     */
+
+    setTimeout(function() {
+
+        question.innerHTML =
+            "あなたが今まで見ていた<br>" +
+            "「島」は、本当に島ですか？";
+
+        question.classList.add("show");
+
+    }, 8500);
+
+
+    /*
+     * 小さな違和感
+     */
+
+    setTimeout(function() {
+
+        warning.classList.add("show");
+
+    }, 11000);
+
+
+    /*
+     * 次へ進むボタン
+     */
+
+    setTimeout(function() {
+
+        buttonArea.classList.add("show");
+
+    }, 13000);
+
+
+    /*
+     * 次のページへ
+     */
+
+    function goNext() {
+
+        window.location.href =
+            "record-room.html";
+
+    }
+
+</script>
+
+</body>
+</html>
