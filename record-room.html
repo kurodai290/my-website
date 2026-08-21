@@ -7,15 +7,18 @@
 <title>記録</title>
 
 <style>
+
     * {
         box-sizing: border-box;
     }
 
     body {
         margin: 0;
+
         min-height: 100vh;
 
         background: #f4f1e8;
+
         color: #252525;
 
         font-family:
@@ -26,14 +29,19 @@
             serif;
 
         display: flex;
+
         justify-content: center;
+
         align-items: center;
 
         overflow: hidden;
     }
 
+
     .room {
+
         width: min(850px, 90%);
+
         min-height: 600px;
 
         background: #fffdf5;
@@ -46,9 +54,12 @@
 
         box-shadow:
             0 0 25px rgba(0,0,0,0.12);
+
     }
 
+
     h1 {
+
         text-align: center;
 
         font-size: 2rem;
@@ -56,13 +67,18 @@
         font-weight: normal;
 
         margin-top: 0;
+
         margin-bottom: 35px;
 
         letter-spacing: 0.3em;
+
     }
 
+
     .record {
+
         border-top: 1px solid #999;
+
         border-bottom: 1px solid #999;
 
         padding: 20px 10px;
@@ -70,13 +86,19 @@
         line-height: 2.2;
 
         font-size: 1rem;
+
     }
+
 
     .record span {
+
         color: #777;
+
     }
 
+
     .warning {
+
         margin-top: 35px;
 
         text-align: center;
@@ -86,13 +108,19 @@
         opacity: 0;
 
         transition: opacity 2s;
+
     }
+
 
     .warning.show {
+
         opacity: 1;
+
     }
 
+
     .question {
+
         margin-top: 25px;
 
         text-align: center;
@@ -102,24 +130,35 @@
         opacity: 0;
 
         transition: opacity 2s;
+
     }
+
 
     .question.show {
+
         opacity: 1;
+
     }
 
+
     .button-area {
+
         margin-top: 40px;
 
         text-align: center;
+
     }
 
+
     button {
+
         background: transparent;
+
+        color: #333;
 
         border: 1px solid #333;
 
-        padding: 12px 45px;
+        padding: 12px 40px;
 
         font-size: 1rem;
 
@@ -127,24 +166,45 @@
 
         cursor: pointer;
 
-        display: none;
     }
+
 
     button:hover {
+
         background: #333;
+
         color: white;
+
     }
 
+
+    /* 答え入力部分 */
+
     #answer-area {
+
         display: none;
 
         text-align: center;
 
-        margin-top: 30px;
+        margin-top: 35px;
+
+        padding-top: 25px;
+
+        border-top: 1px solid #ccc;
+
     }
 
+
+    #answer-area.show {
+
+        display: block;
+
+    }
+
+
     input {
-        width: 150px;
+
+        width: 160px;
 
         padding: 10px;
 
@@ -153,25 +213,32 @@
         font-size: 1.2rem;
 
         letter-spacing: 0.3em;
+
     }
 
+
     #result {
+
         margin-top: 20px;
 
         min-height: 30px;
+
     }
 
 
     /* 隠しボタン */
 
     #hidden-button {
+
         position: absolute;
 
-        width: 18px;
-        height: 18px;
+        width: 25px;
 
-        right: 28px;
-        bottom: 25px;
+        height: 25px;
+
+        right: 25px;
+
+        bottom: 20px;
 
         border: none;
 
@@ -180,16 +247,21 @@
         cursor: pointer;
 
         opacity: 0.03;
+
     }
+
 
     #hidden-button:hover {
-        opacity: 0.15;
+
+        opacity: 0.25;
+
     }
 
 
-    /* 数字 */
+    /* 隠し数字 */
 
     #secret-number {
+
         display: none;
 
         margin-top: 25px;
@@ -199,15 +271,26 @@
         font-size: 2rem;
 
         letter-spacing: 0.5em;
+
+    }
+
+
+    #secret-number.show {
+
+        display: block;
+
     }
 
 </style>
+
 </head>
 
 
 <body>
 
+
 <div class="room">
+
 
     <h1>記録</h1>
 
@@ -215,46 +298,60 @@
     <div class="record">
 
         <div>
-            <span>記録番号：</span> 001
+            <span>記録番号：</span>
+            001
         </div>
 
         <div>
-            <span>場所：</span> ファンシーな島
+            <span>場所：</span>
+            ファンシーな島
         </div>
 
         <div>
-            <span>状態：</span> 正常
+            <span>状態：</span>
+            正常
         </div>
 
         <div>
-            <span>訪問者：</span> なし
+            <span>訪問者：</span>
+            なし
         </div>
 
         <div>
-            <span>最初の記録：</span> 不明
+            <span>最初の記録：</span>
+            不明
         </div>
 
         <div>
-            <span>最後の記録：</span> 不明
+            <span>最後の記録：</span>
+            不明
         </div>
 
     </div>
 
 
-    <div id="warning" class="warning">
+    <div
+        id="warning"
+        class="warning"
+    >
 
         ……おかしい。
 
     </div>
 
 
-    <div id="question" class="question">
+    <div
+        id="question"
+        class="question"
+    >
 
         あなたは、ここに来たはずなのに。
 
         <br>
 
-        <strong>なぜ記録に残っていない？</strong>
+        <strong>
+            なぜ記録に残っていない？
+        </strong>
 
     </div>
 
@@ -265,43 +362,63 @@
             id="continue-button"
             onclick="showAnswer()"
         >
+
             記録を調べる
+
         </button>
 
     </div>
 
 
-    <div id="answer-area">
+    <!-- 答え入力 -->
+
+    <div
+        id="answer-area"
+    >
 
         <div>
+
             記録番号を入力してください。
+
         </div>
 
         <br>
+
 
         <input
             id="answer"
             type="text"
             maxlength="4"
             inputmode="numeric"
+            autocomplete="off"
         >
+
 
         <br><br>
 
+
         <button
-            style="display:inline-block;"
             onclick="checkAnswer()"
         >
+
             確認
+
         </button>
+
 
         <div id="result"></div>
 
     </div>
 
 
-    <div id="secret-number">
+    <!-- 隠し数字 -->
+
+    <div
+        id="secret-number"
+    >
+
         2047
+
     </div>
 
 
@@ -313,109 +430,149 @@
         aria-label="隠しボタン"
     ></button>
 
+
 </div>
 
 
 <script>
 
+
+/*
+========================================
+時間経過による演出
+========================================
+*/
+
+
+setTimeout(function() {
+
+    document
+        .getElementById("warning")
+        .classList.add("show");
+
+}, 2500);
+
+
+setTimeout(function() {
+
+    document
+        .getElementById("question")
+        .classList.add("show");
+
+}, 5000);
+
+
+/*
+========================================
+「記録を調べる」を押したとき
+========================================
+*/
+
+function showAnswer() {
+
+    const answerArea =
+        document.getElementById("answer-area");
+
+
     /*
-     * 最初は普通の記録。
-     * 数秒後に違和感を出す。
-     */
+    表示する
+    */
 
-    setTimeout(function() {
-
-        document
-            .getElementById("warning")
-            .classList.add("show");
-
-    }, 2500);
-
-
-    setTimeout(function() {
-
-        document
-            .getElementById("question")
-            .classList.add("show");
-
-    }, 5000);
-
-
-    setTimeout(function() {
-
-        document
-            .getElementById("continue-button")
-            .style.display = "inline-block";
-
-    }, 7000);
+    answerArea.classList.add("show");
 
 
     /*
-     * 記録を調べる
-     */
+    ボタンを消す
+    */
 
-    function showAnswer() {
+    document
+        .getElementById("continue-button")
+        .style.display = "none";
 
+
+    /*
+    入力欄へカーソルを移動
+    */
+
+    document
+        .getElementById("answer")
+        .focus();
+
+}
+
+
+/*
+========================================
+答えを確認
+========================================
+*/
+
+function checkAnswer() {
+
+    const answer =
         document
-            .getElementById("answer-area")
-            .style.display = "block";
+            .getElementById("answer")
+            .value
+            .trim();
+
+
+    const result =
+        document.getElementById("result");
+
+
+    if (answer === "2047") {
+
+        result.innerHTML =
+            "正解。<br><br>" +
+            "……この記録は、誰が残した？";
+
+
+        result.style.color = "#222";
+
+
+        /*
+        少し待って次へ
+        */
+
+        setTimeout(function() {
+
+            window.location.href =
+                "record-next.html";
+
+        }, 3000);
+
+
+    } else {
+
+
+        result.innerHTML =
+            "違う。<br>" +
+            "記録番号ではないようだ。";
+
+
+        result.style.color = "#900";
 
     }
 
-
-    /*
-     * 答えを確認
-     */
-
-    function checkAnswer() {
-
-        const answer =
-            document.getElementById("answer").value;
-
-        const result =
-            document.getElementById("result");
+}
 
 
-        if (answer === "2047") {
+/*
+========================================
+隠しボタン
+========================================
+*/
 
-            result.innerHTML =
-                "正解。<br><br>……この記録は、誰が残した？";
+function revealSecret() {
 
-            result.style.color = "#222";
+    document
+        .getElementById("secret-number")
+        .classList.add("show");
 
-
-            setTimeout(function() {
-
-                window.location.href =
-                    "record-next.html";
-
-            }, 3000);
-
-        } else {
-
-            result.innerHTML =
-                "違う。記録番号ではないようだ。";
-
-            result.style.color = "#900";
-
-        }
-
-    }
-
-
-    /*
-     * 隠しボタン
-     */
-
-    function revealSecret() {
-
-        document
-            .getElementById("secret-number")
-            .style.display = "block";
-
-    }
+}
 
 </script>
+
 
 </body>
 </html>
