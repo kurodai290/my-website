@@ -3,94 +3,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>クリア画面</title>
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background-color: #000000;
             color: #ff0000;
-            font-family: "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", "MS 明朝", "MS Mincho", serif;
+            font-family:
+                "ヒラギノ明朝 ProN",
+                "Hiragino Mincho ProN",
+                "MS 明朝",
+                "MS Mincho",
+                serif;
+
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+
             height: 100vh;
             margin: 0;
+
             letter-spacing: 0.1em;
+
+            overflow: hidden;
+
+            transition:
+                background-color 2s ease,
+                color 2s ease;
         }
+
         h1 {
             font-size: 3.5rem;
-            margin-top: 0;
-            margin-bottom: 1.5rem;
+            margin: 0 0 1.5rem 0;
+
             font-weight: normal;
+
             letter-spacing: 0.5em;
             text-indent: 0.5em;
+
+            transition:
+                opacity 1.5s ease,
+                transform 1.5s ease;
         }
+
         p {
             font-size: 1.1rem;
-            margin-top: 0;
-            margin-bottom: 0;
+
+            margin: 0;
+
             color: #ffffff;
+
+            transition:
+                opacity 1.5s ease,
+                color 1.5s ease;
         }
-        /* ボタンを囲むコンテナ */
+
+        /* -------------------------
+           通常のボタン
+        ------------------------- */
+
         .button-container {
             display: none;
+
             flex-direction: column;
+
             gap: 15px;
+
             margin-top: 2.5rem;
+
             opacity: 0;
+
             transform: translateY(10px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
         }
-        /* 5秒後に適用されるクラス */
+
         .button-container.show {
             display: flex;
         }
+
         .button-container.fade-in {
             opacity: 1;
+
             transform: translateY(0);
         }
-        /* ボタンのデザイン */
+
         .btn {
             background-color: transparent;
+
             color: #ffffff;
+
             border: 1px solid #ffffff;
+
             padding: 10px 40px;
+
             font-size: 1rem;
+
             font-family: inherit;
+
             cursor: pointer;
+
             text-decoration: none;
+
             text-align: center;
-            min-width: 150px;
-            transition: background-color 0.3s, color 0.3s;
+
+            min-width: 180px;
+
+            transition:
+                background-color 0.3s,
+                color 0.3s;
         }
+
         .btn:hover {
             background-color: #ffffff;
+
             color: #000000;
         }
+
+
+        /* -------------------------
+           第2部への違和感
+        ------------------------- */
+
+        #strange {
+            display: none;
+
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 90%;
+
+            max-width: 700px;
+
+            text-align: center;
+
+            opacity: 0;
+
+            transition:
+                opacity 2s ease;
+        }
+
+        #strange.show {
+            display: block;
+
+            opacity: 1;
+        }
+
+        #question {
+            font-size: 2rem;
+
+            color: #ffffff;
+
+            margin-bottom: 30px;
+
+            letter-spacing: 0.2em;
+        }
+
+        #island {
+            font-size: 1.15rem;
+
+            color: #aaaaaa;
+
+            line-height: 2;
+
+            opacity: 0;
+
+            transition:
+                opacity 2s ease;
+        }
+
+        #island.show {
+            opacity: 1;
+        }
+
+        #stage2 {
+            display: none;
+
+            margin-top: 40px;
+
+            opacity: 0;
+
+            transition:
+                opacity 2s ease;
+        }
+
+        #stage2.show {
+            display: block;
+
+            opacity: 1;
+        }
+
+
+        /* -------------------------
+           最後の違和感
+        ------------------------- */
+
+        .glitch {
+            animation: glitch 0.15s infinite;
+        }
+
+        @keyframes glitch {
+
+            0% {
+                transform: translate(-50%, -50%);
+            }
+
+            50% {
+                transform: translate(-49%, -50%);
+            }
+
+            100% {
+                transform: translate(-50%, -51%);
+            }
+        }
+
     </style>
 </head>
+
+
 <body>
 
-    <h1>くりあ</h1>
-    <p>こんぐらっちゅれーしょん</p>
-    
-    <!-- 5秒後にサブタイトルの下に表示されるボタン -->
+    <!-- 最初は普通のクリア画面 -->
+
+    <h1 id="clear-title">くりあ</h1>
+
+    <p id="clear-message">
+        こんぐらっちゅれーしょん
+    </p>
+
+
+    <!-- 最初のボタン -->
+
     <div id="btn-group" class="button-container">
-        <!-- 💡 href="next.html" で、次のファイルへ飛ぶ設定になっています -->
-        <a href="next.html" class="btn">次のステージへ</a>
-        <a href="index.html" class="btn">最初からやり直す</a>
+
+        <button
+            id="next-button"
+            class="btn"
+            onclick="beginSecondPart()"
+        >
+            次のステージへ
+        </button>
+
+        <a
+            href="index.html"
+            class="btn"
+        >
+            最初からやり直す
+        </a>
+
     </div>
 
+
+    <!-- 第2部への違和感 -->
+
+    <div id="strange">
+
+        <div id="question">
+            ……本当に？
+        </div>
+
+        <div id="island">
+
+            あなたが今まで見ていた<br>
+
+            <span style="color:#ffffff;">
+                「島」
+            </span>
+
+            は、
+
+            <br>
+
+            本当に島ですか？
+
+        </div>
+
+
+        <div id="stage2">
+
+            <a
+                href="stage2-start.html"
+                class="btn"
+            >
+                先へ進む
+            </a>
+
+        </div>
+
+    </div>
+
+
     <script>
-        // 5秒（5000ミリ秒）後にボタンを表示
+
+        /*
+         * ==========================================
+         * 第1段階
+         * 5秒後にクリア画面のボタンを表示
+         * ==========================================
+         */
+
         setTimeout(function() {
-            var btnGroup = document.getElementById('btn-group');
-            btnGroup.classList.add('show');
-            
+
+            var btnGroup =
+                document.getElementById("btn-group");
+
+            btnGroup.classList.add("show");
+
             setTimeout(function() {
-                btnGroup.classList.add('fade-in');
+
+                btnGroup.classList.add("fade-in");
+
             }, 10);
+
         }, 5000);
+
+
+
+        /*
+         * ==========================================
+         * 「次のステージへ」を押したとき
+         * ==========================================
+         */
+
+        function beginSecondPart() {
+
+            /*
+             * ボタンを消す
+             */
+
+            var btnGroup =
+                document.getElementById("btn-group");
+
+            btnGroup.style.opacity = "0";
+
+
+            /*
+             * クリア表示を消す
+             */
+
+            var title =
+                document.getElementById("clear-title");
+
+            var message =
+                document.getElementById("clear-message");
+
+            title.style.opacity = "0";
+
+            message.style.opacity = "0";
+
+
+            /*
+             * 少し待ってから違和感を表示
+             */
+
+            setTimeout(function() {
+
+                var strange =
+                    document.getElementById("strange");
+
+                strange.classList.add("show");
+
+
+                /*
+                 * 「本当に？」のあとに
+                 * 島についての文章を表示
+                 */
+
+                setTimeout(function() {
+
+                    var island =
+                        document.getElementById("island");
+
+                    island.classList.add("show");
+
+                }, 2500);
+
+
+                /*
+                 * 最後に第2部へのボタンを表示
+                 */
+
+                setTimeout(function() {
+
+                    var stage2 =
+                        document.getElementById("stage2");
+
+                    stage2.classList.add("show");
+
+                }, 5500);
+
+            }, 1800);
+
+        }
+
     </script>
 
 </body>
