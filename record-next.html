@@ -5,24 +5,16 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<title>記録 - その先</title>
-
+<title>ふぁんしーなしま - ミニゲーム</title>
 
 <style>
-
-/* ========================================
-   基本
-======================================== */
 
 * {
     box-sizing: border-box;
 }
-
 
 body {
 
@@ -30,16 +22,12 @@ body {
 
     min-height: 100vh;
 
-    background: #111;
-
-    color: #ddd;
+    background: #bfe9ff;
 
     font-family:
-        "ヒラギノ明朝 ProN",
-        "Hiragino Mincho ProN",
-        "Yu Mincho",
-        "MS Mincho",
-        serif;
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
 
     display: flex;
 
@@ -47,278 +35,242 @@ body {
 
     align-items: center;
 
-    overflow-x: hidden;
-
-    overflow-y: auto;
-
-    padding: 30px 15px;
+    overflow: hidden;
 
 }
 
 
-/* ========================================
-   部屋
-======================================== */
+#game {
 
-.room {
+    width: 100vw;
 
-    width: min(850px, 100%);
-
-    min-height: 650px;
-
-    background: #181818;
-
-    border: 1px solid #444;
-
-    padding: 45px;
+    height: 100vh;
 
     position: relative;
 
 }
 
 
-/* ========================================
-   タイトル
-======================================== */
+/*
+========================================
+タイトル
+========================================
+*/
 
-h1 {
+#title {
+
+    position: absolute;
+
+    top: 20px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
 
     text-align: center;
+
+    z-index: 20;
+
+}
+
+
+#title h1 {
+
+    margin: 0;
 
     font-size: 1.8rem;
 
-    font-weight: normal;
+}
 
-    letter-spacing: 0.3em;
 
-    margin-top: 0;
+#status {
 
-    margin-bottom: 40px;
+    margin-top: 8px;
 
 }
 
 
-/* ========================================
-   記録
-======================================== */
+/*
+========================================
+スタート
+========================================
+*/
 
-.record {
+#start-screen {
 
-    border-top: 1px solid #555;
+    position: absolute;
 
-    border-bottom: 1px solid #555;
+    inset: 0;
 
-    padding: 25px;
+    background: rgba(255,255,255,0.85);
 
-    line-height: 2.2;
+    display: flex;
 
-}
+    flex-direction: column;
 
+    justify-content: center;
 
-.label {
+    align-items: center;
 
-    color: #777;
-
-}
-
-
-.hidden {
-
-    color: #181818;
-
-    user-select: none;
+    z-index: 50;
 
 }
 
 
-/* ========================================
-   違和感
-======================================== */
+#start-screen h2 {
 
-.strange {
-
-    margin-top: 35px;
-
-    text-align: center;
-
-    line-height: 2.2;
-
-    opacity: 0;
-
-    transition:
-        opacity 2s ease;
+    font-size: 2rem;
 
 }
 
 
-.strange.show {
+#start-button {
 
-    opacity: 1;
+    padding: 15px 50px;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+
+    border: 2px solid #222;
+
+    background: white;
 
 }
 
 
-/* ========================================
-   謎
-======================================== */
+/*
+========================================
+ターゲット
+========================================
+*/
 
-.puzzle {
+#target {
 
-    margin-top: 40px;
+    position: absolute;
 
-    padding: 25px;
+    width: 70px;
 
-    border: 1px solid #333;
+    height: 70px;
 
-    text-align: center;
+    border-radius: 50%;
+
+    border: 3px solid #222;
+
+    background: #fff;
+
+    cursor: pointer;
 
     display: none;
 
+    z-index: 10;
+
+    transition:
+
+        left 0.08s linear,
+
+        top 0.08s linear,
+
+        width 0.08s,
+
+        height 0.08s;
+
 }
 
 
-.puzzle.show {
+#target:active {
 
-    display: block;
+    transform: scale(0.8);
 
 }
 
 
-.puzzle input {
+/*
+========================================
+偽物
+========================================
+*/
 
-    width: 180px;
+.fake {
 
-    padding: 10px;
+    position: absolute;
 
-    margin-top: 20px;
+    width: 50px;
 
-    background: #222;
+    height: 50px;
 
-    border: 1px solid #666;
+    border-radius: 50%;
 
-    color: white;
+    border: 2px solid #555;
 
-    text-align: center;
+    background: #ddd;
+
+    z-index: 5;
+
+}
+
+
+/*
+========================================
+クリア
+========================================
+*/
+
+#clear-screen {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(255,255,255,0.95);
+
+    display: none;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 100;
+
+}
+
+
+#clear-screen h2 {
+
+    font-size: 2.2rem;
+
+}
+
+
+#next-button {
+
+    padding: 13px 45px;
+
+    cursor: pointer;
 
     font-size: 1rem;
 
 }
 
 
-button {
-
-    margin-top: 20px;
-
-    padding: 10px 35px;
-
-    background: transparent;
-
-    color: #ddd;
-
-    border: 1px solid #777;
-
-    font-family: inherit;
-
-    cursor: pointer;
-
-}
-
-
-button:hover {
-
-    background: #ddd;
-
-    color: #111;
-
-}
-
-
-/* ========================================
-   結果
-======================================== */
-
-#result {
-
-    margin-top: 25px;
-
-    min-height: 60px;
-
-    line-height: 2;
-
-}
-
-
-/* ========================================
-   次へ
-======================================== */
-
-#next {
-
-    display: none;
-
-    margin-top: 35px;
-
-    text-align: center;
-
-}
-
-
-#next a {
-
-    display: inline-block;
-
-    padding: 12px 45px;
-
-    color: #ddd;
-
-    border: 1px solid #777;
-
-    text-decoration: none;
-
-}
-
-
-#next a:hover {
-
-    background: #ddd;
-
-    color: #111;
-
-}
-
-
-/* ========================================
-   スマホ
-======================================== */
+/* スマホ */
 
 @media (max-width: 600px) {
 
-    body {
+    #title h1 {
 
-        align-items: flex-start;
-
-    }
-
-
-    .room {
-
-        padding: 30px 20px;
+        font-size: 1.4rem;
 
     }
 
+    #target {
 
-    h1 {
+        width: 55px;
 
-        font-size: 1.5rem;
-
-    }
-
-
-    .record {
-
-        padding: 20px 10px;
-
-        font-size: 0.9rem;
+        height: 55px;
 
     }
 
@@ -332,279 +284,334 @@ button:hover {
 <body>
 
 
-<div class="room">
+<div id="game">
 
 
-<h1>
+<div id="title">
 
-記録 ― その先
+    <h1>
+        逃げるボタン
+    </h1>
 
-</h1>
-
-
-<div class="record">
-
-    <div>
-
-        <span class="label">
-            記録者：
-        </span>
-
-        ―――――
-
-    </div>
-
-
-    <div>
-
-        <span class="label">
-            記録日時：
-        </span>
-
-        不明
-
-    </div>
-
-
-    <div>
-
-        <span class="label">
-            島への入島：
-        </span>
-
-        なし
-
-    </div>
-
-
-    <div>
-
-        <span class="label">
-            記録対象：
-        </span>
-
-        「あなた」
-
-    </div>
-
-
-    <br>
-
-
-    <div>
-
-        <span class="label">
-            備考：
-        </span>
-
-        ―――
-
+    <div id="status">
+        0 / 10
     </div>
 
 </div>
 
 
-<div
-    id="strange"
-    class="strange"
->
+<!-- スタート -->
 
-    この記録を書いた人物は、
+<div id="start-screen">
 
-    <br>
+    <h2>
 
-    <strong>
-        一度も島に入っていない。
-    </strong>
+        逃げるボタン
 
-    <br><br>
+    </h2>
 
-    ……なのに。
+    <p>
 
-    <br><br>
+        ボタンを10回押せ！
 
-    この記録には、
+    </p>
 
-    <br>
+    <p>
 
-    <strong>
-        あなたしか知らないはずのこと
-    </strong>
+        ……ただし、簡単には押させない。
 
-    が書かれている。
-
-</div>
+    </p>
 
 
-<div
-    id="puzzle"
-    class="puzzle"
->
+    <button id="start-button"
+            onclick="startGame()">
 
-    <div>
-
-        記録の最後に残されていた文字
-
-    </div>
-
-
-    <br>
-
-
-    <strong>
-
-        「最初に見たものを思い出せ」
-
-    </strong>
-
-
-    <br><br>
-
-
-    あなたがこの島で
-
-    <br>
-
-    <strong>
-        最初に見たもの
-    </strong>
-
-    は何だった？
-
-
-    <br>
-
-
-    <input
-        id="answer"
-        type="text"
-        autocomplete="off"
-    >
-
-
-    <br>
-
-
-    <button onclick="checkAnswer()">
-
-        確認
+        START
 
     </button>
 
+</div>
 
-    <div id="result"></div>
+
+<!-- 本物 -->
+
+<button id="target"
+        onclick="hitTarget()">
+
+</button>
+
+
+<!-- クリア -->
+
+<div id="clear-screen">
+
+    <h2>
+
+        CLEAR!
+
+    </h2>
+
+    <p>
+
+        ……意外とやるね。
+
+    </p>
+
+
+    <button id="next-button"
+            onclick="nextStage()">
+
+        次のステージへ
+
+    </button>
 
 </div>
 
 
-<div id="next">
-
-    <a href="record-room2.html">
-
-        次へ進む
-
-    </a>
-
 </div>
-
-
-</div>
-
 
 
 <script>
 
 
-/* ========================================
-   演出
-======================================== */
+let count = 0;
 
+let gameStarted = false;
 
-setTimeout(function() {
+let targetSize = 70;
 
-    document
-        .getElementById("strange")
-        .classList.add("show");
+let moveTimer;
 
-}, 2500);
-
-
-setTimeout(function() {
-
-    document
-        .getElementById("puzzle")
-        .classList.add("show");
-
-}, 6000);
-
-
-
-/* ========================================
-   答え
-======================================== */
 
 /*
-   今回は「最初に見たもの」を
-   第1部とのつながりにする。
-
-   仮の答え：
-   「島」
-
-   後から実際の第1部の内容に合わせて
-   変更できます。
+========================================
+スタート
+========================================
 */
 
-
-function checkAnswer() {
-
-
-    const answer =
-        document
-            .getElementById("answer")
-            .value
-            .trim();
+function startGame() {
 
 
-    const result =
-        document.getElementById("result");
+    count = 0;
+
+    gameStarted = true;
+
+    targetSize = 70;
 
 
-    if (
-        answer === "島" ||
-        answer === "しま"
-    ) {
+    document
+        .getElementById("start-screen")
+        .style.display = "none";
 
 
-        result.innerHTML =
-            "正解。<br><br>" +
-            "……やっぱり、覚えている。";
+    const target =
+        document.getElementById("target");
 
 
-        result.style.color =
-            "#ddd";
+    target.style.display = "block";
 
 
-        setTimeout(function() {
+    updateStatus();
 
-            document
-                .getElementById("next")
-                .style.display = "block";
-
-        }, 2000);
+    moveTarget();
 
 
-    } else {
+    /*
+       定期的に逃げる
+    */
+
+    moveTimer =
+        setInterval(function() {
+
+            if(gameStarted) {
+
+                moveTarget();
+
+            }
+
+        }, 450);
+
+}
 
 
-        result.innerHTML =
-            "……違う。<br>" +
-            "もっと最初を思い出して。";
+/*
+========================================
+ターゲットを移動
+========================================
+*/
+
+function moveTarget() {
 
 
-        result.style.color =
-            "#999";
+    const target =
+        document.getElementById("target");
+
+
+    const margin = 20;
+
+
+    const maxX =
+        window.innerWidth -
+        target.offsetWidth -
+        margin;
+
+
+    const maxY =
+        window.innerHeight -
+        target.offsetHeight -
+        margin;
+
+
+    const x =
+        Math.random() *
+        Math.max(maxX, margin);
+
+
+    const y =
+        Math.random() *
+        Math.max(maxY, margin);
+
+
+    target.style.left =
+        x + "px";
+
+
+    target.style.top =
+        y + "px";
+
+}
+
+
+/*
+========================================
+本物を押した
+========================================
+*/
+
+function hitTarget() {
+
+
+    if(!gameStarted) {
+
+        return;
 
     }
+
+
+    count++;
+
+
+    updateStatus();
+
+
+    /*
+       押すたびに小さくする
+    */
+
+    targetSize =
+        Math.max(
+            28,
+            targetSize - 4
+        );
+
+
+    const target =
+        document.getElementById("target");
+
+
+    target.style.width =
+        targetSize + "px";
+
+
+    target.style.height =
+        targetSize + "px";
+
+
+    /*
+       次の場所へ逃げる
+    */
+
+    moveTarget();
+
+
+    /*
+       10回でクリア
+    */
+
+    if(count >= 10) {
+
+        clearGame();
+
+    }
+
+}
+
+
+/*
+========================================
+表示
+========================================
+*/
+
+function updateStatus() {
+
+
+    document
+        .getElementById("status")
+        .textContent =
+        count + " / 10";
+
+}
+
+
+/*
+========================================
+クリア
+========================================
+*/
+
+function clearGame() {
+
+
+    gameStarted = false;
+
+
+    clearInterval(moveTimer);
+
+
+    document
+        .getElementById("target")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("clear-screen")
+        .style.display =
+        "flex";
+
+}
+
+
+/*
+========================================
+次へ
+========================================
+*/
+
+function nextStage() {
+
+
+    /*
+       次のページは、
+       次のステージを作るときに
+       ファイル名を決めます。
+    */
+
+    alert(
+        "ステージクリア！\n\n" +
+        "次のステージはこれから追加します。"
+    );
 
 }
 
