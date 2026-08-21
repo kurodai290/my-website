@@ -1,285 +1,472 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>記録</title>
 
+
 <style>
 
-    * {
-        box-sizing: border-box;
-    }
+/* ========================================
+   基本設定
+======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    min-height: 100%;
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background: #f4f1e8;
+
+    color: #252525;
+
+    font-family:
+        "ヒラギノ明朝 ProN",
+        "Hiragino Mincho ProN",
+        "Yu Mincho",
+        "MS Mincho",
+        serif;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    /*
+       横方向は画面からはみ出さないようにする
+       縦方向はスクロール可能
+    */
+
+    overflow-x: hidden;
+
+    overflow-y: auto;
+
+    padding: 30px 15px;
+
+}
+
+
+/* ========================================
+   部屋
+======================================== */
+
+.room {
+
+    width: min(850px, 100%);
+
+    min-height: 600px;
+
+    background: #fffdf5;
+
+    border: 1px solid #aaa;
+
+    padding: 45px;
+
+    position: relative;
+
+    box-shadow:
+        0 0 25px rgba(0,0,0,0.12);
+
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+h1 {
+
+    text-align: center;
+
+    font-size: 2rem;
+
+    font-weight: normal;
+
+    margin-top: 0;
+
+    margin-bottom: 35px;
+
+    letter-spacing: 0.3em;
+
+}
+
+
+/* ========================================
+   記録
+======================================== */
+
+.record {
+
+    border-top: 1px solid #999;
+
+    border-bottom: 1px solid #999;
+
+    padding: 20px 10px;
+
+    line-height: 2.2;
+
+    font-size: 1rem;
+
+}
+
+
+.record span {
+
+    color: #777;
+
+}
+
+
+/* ========================================
+   「おかしい」
+======================================== */
+
+.warning {
+
+    margin-top: 35px;
+
+    text-align: center;
+
+    font-size: 1.2rem;
+
+    opacity: 0;
+
+    transition:
+        opacity 2s ease;
+
+}
+
+
+.warning.show {
+
+    opacity: 1;
+
+}
+
+
+/* ========================================
+   質問
+======================================== */
+
+.question {
+
+    margin-top: 25px;
+
+    text-align: center;
+
+    color: #555;
+
+    opacity: 0;
+
+    transition:
+        opacity 2s ease;
+
+    line-height: 2;
+
+}
+
+
+.question.show {
+
+    opacity: 1;
+
+}
+
+
+/* ========================================
+   ボタンエリア
+======================================== */
+
+.button-area {
+
+    margin-top: 40px;
+
+    text-align: center;
+
+}
+
+
+/* ========================================
+   通常ボタン
+======================================== */
+
+button {
+
+    background: transparent;
+
+    color: #333;
+
+    border: 1px solid #333;
+
+    padding: 12px 40px;
+
+    font-size: 1rem;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s,
+        color 0.2s;
+
+}
+
+
+button:hover {
+
+    background: #333;
+
+    color: white;
+
+}
+
+
+/* ========================================
+   答え入力部分
+======================================== */
+
+#answer-area {
+
+    display: none;
+
+    text-align: center;
+
+    margin-top: 35px;
+
+    padding-top: 25px;
+
+    border-top: 1px solid #ccc;
+
+}
+
+
+#answer-area.show {
+
+    display: block;
+
+}
+
+
+#answer-area p {
+
+    margin-bottom: 20px;
+
+}
+
+
+/* ========================================
+   入力欄
+======================================== */
+
+input {
+
+    width: 160px;
+
+    max-width: 80%;
+
+    padding: 10px;
+
+    text-align: center;
+
+    font-size: 1.2rem;
+
+    letter-spacing: 0.3em;
+
+    border: 1px solid #777;
+
+    background: white;
+
+}
+
+
+/* ========================================
+   結果表示
+======================================== */
+
+#result {
+
+    margin-top: 20px;
+
+    min-height: 50px;
+
+    line-height: 1.8;
+
+}
+
+
+/* ========================================
+   隠しボタン
+======================================== */
+
+/*
+   実際には見えにくいが、
+   押せる範囲は25pxあります。
+*/
+
+#hidden-button {
+
+    position: absolute;
+
+    width: 30px;
+
+    height: 30px;
+
+    right: 20px;
+
+    bottom: 20px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    opacity: 0.03;
+
+    z-index: 100;
+
+    padding: 0;
+
+}
+
+
+/*
+   マウスを乗せたときだけ
+   少しだけ見える
+*/
+
+#hidden-button:hover {
+
+    opacity: 0.25;
+
+}
+
+
+/* ========================================
+   隠し数字
+======================================== */
+
+#secret-number {
+
+    display: none;
+
+    margin-top: 30px;
+
+    text-align: center;
+
+    font-size: 2rem;
+
+    letter-spacing: 0.5em;
+
+}
+
+
+#secret-number.show {
+
+    display: block;
+
+}
+
+
+/* ========================================
+   スマホ用
+======================================== */
+
+@media (max-width: 600px) {
 
     body {
-        margin: 0;
 
-        min-height: 100vh;
+        align-items: flex-start;
 
-        background: #f4f1e8;
+        padding-top: 20px;
 
-        color: #252525;
+        padding-bottom: 40px;
 
-        font-family:
-            "ヒラギノ明朝 ProN",
-            "Hiragino Mincho ProN",
-            "Yu Mincho",
-            "MS Mincho",
-            serif;
-
-        display: flex;
-
-        justify-content: center;
-
-        align-items: center;
-
-        overflow: hidden;
     }
 
 
     .room {
 
-        width: min(850px, 90%);
+        padding: 30px 20px;
 
-        min-height: 600px;
-
-        background: #fffdf5;
-
-        border: 1px solid #aaa;
-
-        padding: 45px;
-
-        position: relative;
-
-        box-shadow:
-            0 0 25px rgba(0,0,0,0.12);
+        min-height: 650px;
 
     }
 
 
     h1 {
 
-        text-align: center;
+        font-size: 1.7rem;
 
-        font-size: 2rem;
-
-        font-weight: normal;
-
-        margin-top: 0;
-
-        margin-bottom: 35px;
-
-        letter-spacing: 0.3em;
+        margin-bottom: 25px;
 
     }
 
 
     .record {
 
-        border-top: 1px solid #999;
+        font-size: 0.95rem;
 
-        border-bottom: 1px solid #999;
-
-        padding: 20px 10px;
-
-        line-height: 2.2;
-
-        font-size: 1rem;
-
-    }
-
-
-    .record span {
-
-        color: #777;
+        line-height: 2;
 
     }
 
 
     .warning {
 
-        margin-top: 35px;
-
-        text-align: center;
-
-        font-size: 1.2rem;
-
-        opacity: 0;
-
-        transition: opacity 2s;
-
-    }
-
-
-    .warning.show {
-
-        opacity: 1;
+        font-size: 1.1rem;
 
     }
 
 
     .question {
 
-        margin-top: 25px;
-
-        text-align: center;
-
-        color: #555;
-
-        opacity: 0;
-
-        transition: opacity 2s;
-
-    }
-
-
-    .question.show {
-
-        opacity: 1;
-
-    }
-
-
-    .button-area {
-
-        margin-top: 40px;
-
-        text-align: center;
+        font-size: 0.95rem;
 
     }
 
 
     button {
 
-        background: transparent;
-
-        color: #333;
-
-        border: 1px solid #333;
-
-        padding: 12px 40px;
-
-        font-size: 1rem;
-
-        font-family: inherit;
-
-        cursor: pointer;
+        padding: 11px 28px;
 
     }
 
-
-    button:hover {
-
-        background: #333;
-
-        color: white;
-
-    }
-
-
-    /* 答え入力部分 */
-
-    #answer-area {
-
-        display: none;
-
-        text-align: center;
-
-        margin-top: 35px;
-
-        padding-top: 25px;
-
-        border-top: 1px solid #ccc;
-
-    }
-
-
-    #answer-area.show {
-
-        display: block;
-
-    }
-
-
-    input {
-
-        width: 160px;
-
-        padding: 10px;
-
-        text-align: center;
-
-        font-size: 1.2rem;
-
-        letter-spacing: 0.3em;
-
-    }
-
-
-    #result {
-
-        margin-top: 20px;
-
-        min-height: 30px;
-
-    }
-
-
-    /* 隠しボタン */
 
     #hidden-button {
 
-        position: absolute;
+        width: 35px;
 
-        width: 25px;
+        height: 35px;
 
-        height: 25px;
+        right: 15px;
 
-        right: 25px;
-
-        bottom: 20px;
-
-        border: none;
-
-        background: transparent;
-
-        cursor: pointer;
-
-        opacity: 0.03;
+        bottom: 15px;
 
     }
 
-
-    #hidden-button:hover {
-
-        opacity: 0.25;
-
-    }
-
-
-    /* 隠し数字 */
-
-    #secret-number {
-
-        display: none;
-
-        margin-top: 25px;
-
-        text-align: center;
-
-        font-size: 2rem;
-
-        letter-spacing: 0.5em;
-
-    }
-
-
-    #secret-number.show {
-
-        display: block;
-
-    }
+}
 
 </style>
 
@@ -292,43 +479,82 @@
 <div class="room">
 
 
-    <h1>記録</h1>
+    <!-- ===================================
+         タイトル
+    ==================================== -->
 
+    <h1>
+
+        記録
+
+    </h1>
+
+
+    <!-- ===================================
+         記録内容
+    ==================================== -->
 
     <div class="record">
 
         <div>
+
             <span>記録番号：</span>
+
             001
+
         </div>
 
+
         <div>
+
             <span>場所：</span>
+
             ファンシーな島
+
         </div>
 
+
         <div>
+
             <span>状態：</span>
+
             正常
+
         </div>
 
+
         <div>
+
             <span>訪問者：</span>
+
             なし
+
         </div>
 
+
         <div>
+
             <span>最初の記録：</span>
+
             不明
+
         </div>
 
+
         <div>
+
             <span>最後の記録：</span>
+
             不明
+
         </div>
 
     </div>
 
+
+    <!-- ===================================
+         違和感
+    ==================================== -->
 
     <div
         id="warning"
@@ -340,6 +566,10 @@
     </div>
 
 
+    <!-- ===================================
+         質問
+    ==================================== -->
+
     <div
         id="question"
         class="question"
@@ -350,11 +580,17 @@
         <br>
 
         <strong>
+
             なぜ記録に残っていない？
+
         </strong>
 
     </div>
 
+
+    <!-- ===================================
+         調べるボタン
+    ==================================== -->
 
     <div class="button-area">
 
@@ -370,19 +606,19 @@
     </div>
 
 
-    <!-- 答え入力 -->
+    <!-- ===================================
+         答え入力
+    ==================================== -->
 
     <div
         id="answer-area"
     >
 
-        <div>
+        <p>
 
             記録番号を入力してください。
 
-        </div>
-
-        <br>
+        </p>
 
 
         <input
@@ -411,7 +647,9 @@
     </div>
 
 
-    <!-- 隠し数字 -->
+    <!-- ===================================
+         隠し数字
+    ==================================== -->
 
     <div
         id="secret-number"
@@ -422,7 +660,9 @@
     </div>
 
 
-    <!-- 隠しボタン -->
+    <!-- ===================================
+         隠しボタン
+    ==================================== -->
 
     <button
         id="hidden-button"
@@ -434,15 +674,18 @@
 </div>
 
 
+
 <script>
 
 
-/*
-========================================
-時間経過による演出
-========================================
-*/
+/* ========================================
+   最初の演出
+======================================== */
 
+
+/*
+   2.5秒後
+*/
 
 setTimeout(function() {
 
@@ -453,6 +696,10 @@ setTimeout(function() {
 }, 2500);
 
 
+/*
+   5秒後
+*/
+
 setTimeout(function() {
 
     document
@@ -462,36 +709,40 @@ setTimeout(function() {
 }, 5000);
 
 
-/*
-========================================
-「記録を調べる」を押したとき
-========================================
-*/
+
+/* ========================================
+   「記録を調べる」
+======================================== */
 
 function showAnswer() {
 
+
     const answerArea =
-        document.getElementById("answer-area");
+        document.getElementById(
+            "answer-area"
+        );
 
 
     /*
-    表示する
+       入力欄を表示
     */
 
     answerArea.classList.add("show");
 
 
     /*
-    ボタンを消す
+       調べるボタンを消す
     */
 
     document
-        .getElementById("continue-button")
+        .getElementById(
+            "continue-button"
+        )
         .style.display = "none";
 
 
     /*
-    入力欄へカーソルを移動
+       入力欄にカーソルを移動
     */
 
     document
@@ -501,13 +752,13 @@ function showAnswer() {
 }
 
 
-/*
-========================================
-答えを確認
-========================================
-*/
+
+/* ========================================
+   答え確認
+======================================== */
 
 function checkAnswer() {
+
 
     const answer =
         document
@@ -517,10 +768,17 @@ function checkAnswer() {
 
 
     const result =
-        document.getElementById("result");
+        document.getElementById(
+            "result"
+        );
 
+
+    /*
+       正解
+    */
 
     if (answer === "2047") {
+
 
         result.innerHTML =
             "正解。<br><br>" +
@@ -531,18 +789,27 @@ function checkAnswer() {
 
 
         /*
-        少し待って次へ
+           3秒後に次のページ
         */
 
         setTimeout(function() {
 
+
             window.location.href =
                 "record-next.html";
+
 
         }, 3000);
 
 
-    } else {
+    }
+
+
+    /*
+       不正解
+    */
+
+    else {
 
 
         result.innerHTML =
@@ -557,17 +824,25 @@ function checkAnswer() {
 }
 
 
-/*
-========================================
-隠しボタン
-========================================
-*/
+
+/* ========================================
+   隠しボタン
+======================================== */
 
 function revealSecret() {
 
-    document
-        .getElementById("secret-number")
-        .classList.add("show");
+
+    const secret =
+        document.getElementById(
+            "secret-number"
+        );
+
+
+    /*
+       2047を表示
+    */
+
+    secret.classList.add("show");
 
 }
 
@@ -575,4 +850,5 @@ function revealSecret() {
 
 
 </body>
+
 </html>
