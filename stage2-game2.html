@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>ふぁんしーなしま - 止めろ！</title>
+
+
+<style>
+
+/* ========================================
+   基本設定
+======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    margin: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+
+body {
+
+    background: #dff7e8;
+
+    color: #222;
+
+    font-family:
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
+
+    overflow: hidden;
+
+}
+
+
+/* ========================================
+   ゲーム画面
+======================================== */
+
+#game {
+
+    position: relative;
+
+    width: 100vw;
+
+    height: 100vh;
+
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+#title {
+
+    position: absolute;
+
+    top: 25px;
+
+    left: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    z-index: 10;
+
+}
+
+
+#title h1 {
+
+    margin: 0;
+
+    font-size: 2rem;
+
+}
+
+
+#stage {
+
+    margin-top: 8px;
+
+    font-size: 1rem;
+
+}
+
+
+/* ========================================
+   スタート画面
+======================================== */
+
+#start-screen {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(255,255,255,0.92);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    z-index: 100;
+
+}
+
+
+#start-screen h2 {
+
+    font-size: 2.2rem;
+
+    margin-bottom: 10px;
+
+}
+
+
+#start-screen p {
+
+    line-height: 2;
+
+}
+
+
+#start-button {
+
+    margin-top: 25px;
+
+    padding: 15px 55px;
+
+    font-size: 1.2rem;
+
+    background: white;
+
+    border: 2px solid #222;
+
+    cursor: pointer;
+
+}
+
+
+#start-button:hover {
+
+    background: #222;
+
+    color: white;
+
+}
+
+
+/* ========================================
+   ゲーム部分
+======================================== */
+
+#game-area {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: min(750px, 90vw);
+
+    text-align: center;
+
+}
+
+
+/* ========================================
+   説明
+======================================== */
+
+#instruction {
+
+    font-size: 1.2rem;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* ========================================
+   バー
+======================================== */
+
+#bar {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 55px;
+
+    background: #cfcfcf;
+
+    border: 3px solid #333;
+
+    overflow: hidden;
+
+}
+
+
+/* ========================================
+   成功ゾーン
+======================================== */
+
+#success-zone {
+
+    position: absolute;
+
+    top: 0;
+
+    height: 100%;
+
+    background: #ffe36e;
+
+}
+
+
+/* ========================================
+   動くゲージ
+======================================== */
+
+#cursor {
+
+    position: absolute;
+
+    top: -5px;
+
+    width: 14px;
+
+    height: 65px;
+
+    background: #111;
+
+    z-index: 5;
+
+}
+
+
+/* ========================================
+   判定
+======================================== */
+
+#result {
+
+    min-height: 40px;
+
+    margin-top: 20px;
+
+    font-size: 1.2rem;
+
+    font-weight: bold;
+
+}
+
+
+/* ========================================
+   ボタン
+======================================== */
+
+#stop-button {
+
+    margin-top: 15px;
+
+    padding: 15px 65px;
+
+    font-size: 1.2rem;
+
+    border: 2px solid #222;
+
+    background: white;
+
+    cursor: pointer;
+
+}
+
+
+#stop-button:hover {
+
+    background: #222;
+
+    color: white;
+
+}
+
+
+#stop-button:disabled {
+
+    opacity: 0.4;
+
+    cursor: default;
+
+}
+
+
+/* ========================================
+   クリア画面
+======================================== */
+
+#clear-screen {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(255,255,255,0.95);
+
+    display: none;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 80;
+
+    text-align: center;
+
+}
+
+
+#clear-screen h2 {
+
+    font-size: 2.5rem;
+
+}
+
+
+#clear-screen p {
+
+    line-height: 2;
+
+}
+
+
+/* ========================================
+   次へ
+======================================== */
+
+#next-button {
+
+    margin-top: 25px;
+
+    padding: 12px 45px;
+
+    border: 2px solid #222;
+
+    background: white;
+
+    cursor: pointer;
+
+}
+
+
+#next-button:hover {
+
+    background: #222;
+
+    color: white;
+
+}
+
+
+/* ========================================
+   隠しボタン
+======================================== */
+
+/*
+   クリア後にだけ出現。
+
+   普通に見てもほぼ分からない。
+*/
+
+#hidden-button {
+
+    position: absolute;
+
+    width: 32px;
+
+    height: 32px;
+
+    right: 13px;
+
+    bottom: 13px;
+
+    border: none;
+
+    background: transparent;
+
+    opacity: 0.025;
+
+    cursor: pointer;
+
+    display: none;
+
+    z-index: 200;
+
+}
+
+
+#hidden-button:hover {
+
+    opacity: 0.25;
+
+}
+
+
+/* ========================================
+   隠しボタン発見
+======================================== */
+
+#hidden-message {
+
+    display: none;
+
+    margin-top: 20px;
+
+    font-size: 1.1rem;
+
+}
+
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 600px) {
+
+    #title h1 {
+
+        font-size: 1.5rem;
+
+    }
+
+
+    #game-area {
+
+        width: 90vw;
+
+    }
+
+
+    #bar {
+
+        height: 48px;
+
+    }
+
+
+    #cursor {
+
+        height: 58px;
+
+    }
+
+
+    #stop-button {
+
+        padding: 14px 50px;
+
+    }
+
+
+    #start-screen h2 {
+
+        font-size: 1.8rem;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="game">
+
+
+<!-- =====================================
+     タイトル
+===================================== -->
+
+<div id="title">
+
+    <h1>
+
+        止めろ！
+
+    </h1>
+
+    <div id="stage">
+
+        STAGE 2
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================
+     スタート
+===================================== -->
+
+<div id="start-screen">
+
+    <h2>
+
+        止めろ！
+
+    </h2>
+
+
+    <p>
+
+        動いているゲージを<br>
+
+        黄色い場所で止めろ！
+
+    </p>
+
+
+    <p>
+
+        全5ステージ。
+
+        <br>
+
+        失敗すると最初から。
+
+    </p>
+
+
+    <button
+        id="start-button"
+        onclick="startGame()"
+    >
+
+        START
+
+    </button>
+
+</div>
+
+
+
+<!-- =====================================
+     ゲーム本体
+===================================== -->
+
+<div id="game-area">
+
+
+    <div id="instruction">
+
+        黄色い場所で止めろ！
+
+    </div>
+
+
+    <div id="bar">
+
+
+        <div
+            id="success-zone"
+        ></div>
+
+
+        <div
+            id="cursor"
+        ></div>
+
+
+    </div>
+
+
+    <div id="result"></div>
+
+
+    <button
+        id="stop-button"
+        onclick="stopCursor()"
+        disabled
+    >
+
+        STOP！
+
+    </button>
+
+
+</div>
+
+
+
+<!-- =====================================
+     クリア
+===================================== -->
+
+<div id="clear-screen">
+
+
+    <h2>
+
+        CLEAR!
+
+    </h2>
+
+
+    <p>
+
+        全5段階クリア！
+
+        <br><br>
+
+        ……これで終わり？
+
+    </p>
+
+
+    <div id="hidden-message">
+
+        隠しボタンを見つけた。
+
+    </div>
+
+
+    <button
+        id="next-button"
+        onclick="nextStage()"
+        disabled
+    >
+
+        次のステージへ
+
+    </button>
+
+
+</div>
+
+
+
+<!-- =====================================
+     隠しボタン
+===================================== -->
+
+<button
+    id="hidden-button"
+    onclick="findHidden()"
+    aria-label="隠しボタン"
+></button>
+
+
+</div>
+
+
+
+<script>
+
+
+/* ========================================
+   変数
+======================================== */
+
+
+let level = 0;
+
+let position = 0;
+
+let direction = 1;
+
+let speed = 0.8;
+
+let gameRunning = false;
+
+let animationId;
+
+
+/*
+   成功ゾーン
+
+   left = 左端からの割合
+   width = 幅
+*/
+
+let zoneLeft = 30;
+
+let zoneWidth = 25;
+
+
+
+/* ========================================
+   ゲーム開始
+======================================== */
+
+function startGame() {
+
+
+    level = 0;
+
+    position = 0;
+
+    direction = 1;
+
+    speed = 0.8;
+
+    gameRunning = true;
+
+
+    document
+        .getElementById("start-screen")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("stop-button")
+        .disabled =
+        false;
+
+
+    document
+        .getElementById("result")
+        .textContent =
+        "";
+
+
+    createZone();
+
+
+    animationId =
+        requestAnimationFrame(moveCursor);
+
+}
+
+
+
+/* ========================================
+   成功ゾーンを作る
+======================================== */
+
+function createZone() {
+
+
+    /*
+       レベルが上がるほど狭くする
+    */
+
+    zoneWidth =
+        25 - (level * 3);
+
+
+    /*
+       最低でも8%
+    */
+
+    if(zoneWidth < 8) {
+
+        zoneWidth = 8;
+
+    }
+
+
+    /*
+       ランダムな場所
+    */
+
+    zoneLeft =
+        Math.random() *
+        (100 - zoneWidth);
+
+
+    const zone =
+        document
+            .getElementById(
+                "success-zone"
+            );
+
+
+    zone.style.left =
+        zoneLeft + "%";
+
+
+    zone.style.width =
+        zoneWidth + "%";
+
+}
+
+
+
+/* ========================================
+   ゲージを動かす
+======================================== */
+
+function moveCursor() {
+
+
+    if(!gameRunning) {
+
+        return;
+
+    }
+
+
+    position +=
+        direction * speed;
+
+
+    /*
+       左端
+    */
+
+    if(position <= 0) {
+
+        position = 0;
+
+        direction = 1;
+
+    }
+
+
+    /*
+       右端
+    */
+
+    if(position >= 99) {
+
+        position = 99;
+
+        direction = -1;
+
+    }
+
+
+    const cursor =
+        document
+            .getElementById(
+                "cursor"
+            );
+
+
+    cursor.style.left =
+        position + "%";
+
+
+    animationId =
+        requestAnimationFrame(
+            moveCursor
+        );
+
+}
+
+
+
+/* ========================================
+   STOP
+======================================== */
+
+function stopCursor() {
+
+
+    if(!gameRunning) {
+
+        return;
+
+    }
+
+
+    /*
+       今いる場所が
+       成功ゾーンに入っているか
+       判定する
+    */
+
+    const cursorPosition =
+        position;
+
+
+    if(
+        cursorPosition >= zoneLeft &&
+        cursorPosition <=
+            zoneLeft + zoneWidth
+    ) {
+
+
+        success();
+
+
+    } else {
+
+
+        fail();
+
+    }
+
+}
+
+
+
+/* ========================================
+   成功
+======================================== */
+
+function success() {
+
+
+    gameRunning = false;
+
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    level++;
+
+
+    document
+        .getElementById("result")
+        .textContent =
+        "成功！";
+
+
+    /*
+       5回成功
+    */
+
+    if(level >= 5) {
+
+
+        setTimeout(
+            clearGame,
+            700
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+       少し待って次へ
+    */
+
+    setTimeout(function() {
+
+
+        position = 0;
+
+
+        /*
+           成功するほど速くする
+        */
+
+        speed += 0.35;
+
+
+        createZone();
+
+
+        gameRunning = true;
+
+
+        document
+            .getElementById("result")
+            .textContent =
+            "次！";
+
+
+        animationId =
+            requestAnimationFrame(
+                moveCursor
+            );
+
+
+    }, 700);
+
+}
+
+
+
+/* ========================================
+   失敗
+======================================== */
+
+function fail() {
+
+
+    gameRunning = false;
+
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    document
+        .getElementById("result")
+        .textContent =
+        "失敗……最初から。";
+
+
+    document
+        .getElementById("stop-button")
+        .disabled =
+        true;
+
+
+    /*
+       1.2秒後に最初から
+    */
+
+    setTimeout(function() {
+
+
+        level = 0;
+
+        position = 0;
+
+        direction = 1;
+
+        speed = 0.8;
+
+
+        document
+            .getElementById(
+                "result"
+            )
+            .textContent =
+            "";
+
+
+        createZone();
+
+
+        document
+            .getElementById(
+                "stop-button"
+            )
+            .disabled =
+            false;
+
+
+        gameRunning = true;
+
+
+        animationId =
+            requestAnimationFrame(
+                moveCursor
+            );
+
+
+    }, 1200);
+
+}
+
+
+
+/* ========================================
+   クリア
+======================================== */
+
+function clearGame() {
+
+
+    gameRunning = false;
+
+
+    cancelAnimationFrame(
+        animationId
+    );
+
+
+    document
+        .getElementById(
+            "clear-screen"
+        )
+        .style.display =
+        "flex";
+
+
+    /*
+       ここで隠しボタンを出す
+
+       ただしほとんど見えない
+    */
+
+    document
+        .getElementById(
+            "hidden-button"
+        )
+        .style.display =
+        "block";
+
+}
+
+
+
+/* ========================================
+   隠しボタン
+======================================== */
+
+function findHidden() {
+
+
+    document
+        .getElementById(
+            "hidden-message"
+        )
+        .style.display =
+        "block";
+
+
+    document
+        .getElementById(
+            "next-button"
+        )
+        .disabled =
+        false;
+
+
+    document
+        .getElementById(
+            "hidden-button"
+        )
+        .style.opacity =
+        "0.15";
+
+}
+
+
+
+/* ========================================
+   次のステージ
+======================================== */
+
+function nextStage() {
+
+
+    /*
+       次のステージを作ったら
+       ここを書き換える。
+
+       例：
+
+       window.location.href =
+           "stage2-game3.html";
+    */
+
+
+    alert(
+        "次のステージはこれから追加します！"
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
